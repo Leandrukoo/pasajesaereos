@@ -48,6 +48,10 @@ header {
     border-radius: 5px;
 }
 
+.nav_header .logo-perfil-container a:hover {
+    background-color: rgb(22, 22, 63);
+}
+
 .li_header a:hover {
     background-color: rgb(72, 122, 122);
 }

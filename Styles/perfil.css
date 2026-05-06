@@ -26,8 +26,7 @@
 .sidebar-perfil li a {
     text-decoration: none;
 }
-
-.sidebar-perfil li .active {
+.sidebar-perfil li.active {
     background-color: rgb(132, 163, 221);
 }
 

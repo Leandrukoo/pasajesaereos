@@ -1,20 +1,20 @@
 .reservas-container {
-    background-color: #14163a;
-    padding-top: 4rem;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.reservas-container h1 {
+.reservas-container h2 {
     color: white;
     margin-bottom: 2rem;
+    text-align: left;
 }
 
 .mis-reservas {
     width: 600px;
     margin: auto;
+    margin-top: 0;
     background-color: rgb(132, 163, 221);
     padding: 1rem;
     border-radius: 10px;
