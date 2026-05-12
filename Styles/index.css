@@ -1,4 +1,3 @@
-button,
 option,
 input,
 select {
@@ -45,19 +44,41 @@ select {
     width: 100%;
 }
 
-.items-formulario button {
-    background-color: rgb(40, 40, 48);
+.items-formulario_buscar {
     color: white;
-    border: none;
+    display: flex;
+    margin-left: 3rem;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin: 0.3rem;
+    padding: 0;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.items-formulario_buscar button {
+    background-color: white;
+    color: black;
+    border: solid;
+    border-color: rgba(31, 50, 134, 0.692);
+    border-width: 0.0625rem;
     padding: 0.5rem 1rem;
     cursor: pointer;
-    border-radius: 0.3125 rem;
+    border-radius: 0.5rem;
     font-size: large;
-    width: 100%;
-    height: 2rem;
+    width: 49.5rem;
+    height: 3rem;
     margin-top: 1rem;
     font-size: 1.2rem;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.items-formulario_buscar button:hover {
+    background-color: rgb(166, 180, 206);
+    color: black;
 }
 
 .formulario {
@@ -189,16 +210,16 @@ textarea {
     cursor: pointer;
     padding: 0.625rem 1.875rem;
     font-weight: bold;
-    width: 10rem;
-    background-color: rgb(40, 40, 48);
-    color: white;
-    border: 0.0625rem solid rgba(255, 255, 255, 0.5);
+    width: 20rem;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    border: 0.0625rem solid rgba(31, 50, 134, 0.692);
     border-radius: 0.5rem;
     transition: background-color 0.3s;
 }
 
 .botones-formulario button:hover {
-    background-color: rgb(132, 163, 221);
+    background-color: rgb(166, 180, 206);
     color: black;
 }
 

@@ -160,14 +160,14 @@ body {
 #btn-continuar {
   align-self: flex-start;
   padding: 9px 24px;
-  background-color: #7f77dd;
-  color: white;
-  border: none;
-  border-radius: 8px;
+  background-color: white;
+  color: black;
+  border: solid rgba(31, 50, 134, 0.692);
+  border-radius: 0.5rem ;
   font-size: 0.9rem;
   cursor: pointer;
 }
 
 #btn-continuar:hover {
-  background-color: #534ab7;
+  background-color: rgb(166, 180, 206);
 }

@@ -36,7 +36,13 @@ footer {
     margin-right: 1.5rem;
     height: 4rem;
     width: 7rem;
-    background-color: rgb(40, 40, 48);
+    background-color: white;
+    color: black;
+}
+
+.boton_reservar:hover {
+    background-color: rgb(166, 180, 206);
+    color: black;
 }
 
 .filtro_equipaje {
