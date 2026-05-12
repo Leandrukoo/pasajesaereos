@@ -89,3 +89,7 @@ button{
     width: 5rem;
     height: 2.5rem;
 }
+
+#cancelar{
+    margin-left: 2rem;
+}
