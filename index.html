@@ -1,88 +1,40 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="Styles/headerYFooter.css">
+    <link rel="stylesheet" href="Styles/inicio.css">
     <link rel="stylesheet" href="Styles/index.css">
-    <title>PasajesAereos - Inicio</title>
+    <title>Iniciar Sesión</title>
 </head>
-
 <body>
-
     <header>
         <nav class="nav_header">
             <div class="logo-perfil-container">
                 <img class="img_header" src="Imagenes/fondo-transparente.png" alt="PasajesAereos Logo" width="100">
-                <a href="pages/perfil.html" class="link-perfil">¡Hola, Juan!</a>
             </div>
             <ul class="ul_header">
-                <li class="li_header"><a href="./index.html">Inicio</a></li>
-                <li class="li_header"><a href="./pages/vuelos.html">Vuelos</a></li>
-                <li class="li_header"><a href="./pages/ofertas.html">Ofertas</a></li>
-                <li class="li_header"><a href="./pages/contacto.html">Contacto</a></li>
+                <li class="li_header"><a href="pages/registrarse.html">Registrate ahora!</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <section>
-            <div class="titulo-principal">
-                <h2>Vola ahora, vola ya!</h2>
-                <h3>Busca tu vuelo</h3>
-            </div>
-            <div class="busqueda-vuelos">
-                <form class="main-form" action="pages/vuelos.html">
-                    <div class="items-formulario" style="flex-direction: row; margin-bottom: 1rem;">
-                        <label><input type="radio" name="tipo" value="ida-vuelta"> Ida y vuelta</label>
-                        <label><input type="radio" name="tipo" value="solo-ida"> Solo ida</label>
-                    </div>
-                    <div class="fila-formulario">
-                        <div class="items-formulario">
-                            <label for="origen"><i class="fa-solid fa-plane-departure"></i> Origen: </label>
-                            <input type="text" id="origen" name="origen" placeholder="Ciudad de origen" required>
-                        </div>
-                        <div class="items-formulario">
-                            <label for="destino"><i class="fa-solid fa-plane-arrival"></i> Destino: </label>
-                            <input type="text" id="destino" name="destino" placeholder="Ciudad de destino" required>
-                        </div>
-                    </div>
-
-                    <div class="fila-formulario">
-                        <div class="items-formulario">
-                            <label for="fecha-ida"><i class="fa-solid fa-calendar-days"></i> Ida: </label>
-                            <input type="date" id="fecha-ida" name="fecha-ida" required>
-                        </div>
-                        <div class="items-formulario">
-                            <label for="fecha-vuelta"><i class="fa-solid fa-calendar-days"></i> Vuelta: </label>
-                            <input type="date" id="fecha-vuelta" name="fecha-vuelta">
-                        </div>
-                    </div>
-
-                    <div class="fila-formulario">
-                        <div class="items-formulario">
-                            <label for="pasajeros"> <i class="fa-solid fa-user"></i> Pasajeros: </label>
-                            <select id="pasajeros" name="pasajeros">
-                                <option value="1">1 Pasajero</option>
-                                <option value="2">2 Pasajeros</option>
-                                <option value="3">3 Pasajeros</option>
-                            </select>
-                        </div>
-                        <div class="items-formulario">
-                            <label for="clase"> <i class="fa-solid fa-chair"></i> Clase: </label>
-                            <select id="clase" name="clase">
-                                <option value="economica">Económica</option>
-                                <option value="ejecutiva">Ejecutiva</option>
-                                <option value="primera">Primera Clase</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="items-formulario_buscar">
-                        <button type="submit" class="btn-search" action="vuelos.html">Buscar Vuelos</button>
-                    </div>
-                </form>
-            </div>
+        <section class="seccion-iniciar-sesion">    
+            <h1>Iniciar Sesión</h1>
+            <form class="form-iniciar-sesion" action="pages/inicio.html">
+                <div class="campo-formulario">
+                    <label for="email"><h3>Correo Electrónico:</h3></label>
+                    <input type="email" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
+                </div>
+                <div class="campo-formulario">
+                    <label for="password"><h3>Contraseña:</h3></label>
+                    <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+                </div>
+                <a href="pages/recuperar-contra.html">¿Olvidaste la contraseña?</a>
+                <button type="submit" class="btn-iniciar-sesion">Iniciar Sesión</button>
+            </form>
         </section>
     </main>
     <footer>
@@ -128,5 +80,4 @@
         </ul>
     </footer>
 </body>
-
 </html>

@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="../Styles/index.css">
-    <link rel="stylesheet" href="../Styles/perfil.css">
     <link rel="stylesheet" href="../Styles/headerYFooter.css">
-    <link rel="stylesheet" href="../Styles/reservas.css">
-    <title>PasajesAereos - Mis reservas</title>
+    <link rel="stylesheet" href="../Styles/inicio.css">
+    <title>PasajesAereos - Inicio</title>
 </head>
 
 <body>
+
     <header>
         <nav class="nav_header">
             <div class="logo-perfil-container">
@@ -28,86 +27,68 @@
             </ul>
         </nav>
     </header>
-       <main class="contenedor-perfil">
-        <nav class="sidebar-perfil">
-            <h3>Juan Perez</h3>
-            <nav>
-                <ul>
-                    <li><a href="perfil.html">Información Personal</a></li>
-                    <li class="active"><a href="reservas.html">Mis Reservas</a></li>
-                </ul>
-            </nav>
-        </nav>
-        <div class="reservas-container">
-            
-            <h2>Mis Reservas</h2>
-
-            <section class="mis-reservas">
-
-                <input type="checkbox" name="accordion" id="vuelo1" checked>
-
-                <label for="vuelo1" class="item">
-                    <div>
-                        <strong>Buenos Aires → Madrid</strong>
-                        <p>10/08/2024 - 20/08/2024</p>
+    <main>
+        <section>
+            <div class="titulo-principal">
+                <h2>Vola ahora, vola ya!</h2>
+                <h3>Busca tu vuelo</h3>
+            </div>
+            <div class="busqueda-vuelos">
+                <form class="main-form" action="pages/vuelos.html">
+                    <div class="items-formulario" style="flex-direction: row; margin-bottom: 1rem;">
+                        <label><input type="radio" name="tipo" value="ida-vuelta"> Ida y vuelta</label>
+                        <label><input type="radio" name="tipo" value="solo-ida"> Solo ida</label>
                     </div>
-                    <div class="derecha">
-                        <span>$550 USD</span>
-                        <span class="flecha">⌄</span>
+                    <div class="fila-formulario">
+                        <div class="items-formulario">
+                            <label for="origen"><i class="fa-solid fa-plane-departure"></i> Origen: </label>
+                            <input type="text" id="origen" name="origen" placeholder="Ciudad de origen" required>
+                        </div>
+                        <div class="items-formulario">
+                            <label for="destino"><i class="fa-solid fa-plane-arrival"></i> Destino: </label>
+                            <input type="text" id="destino" name="destino" placeholder="Ciudad de destino" required>
+                        </div>
                     </div>
-                </label>
 
-                <div class="contenido">
-                    <p><strong>Ida:</strong> 12:00 → 08:40 (+1)</p>
-                    <p><strong>Vuelta:</strong> 18:30 → 06:40 (+1)</p>
-                    <p><strong>Escala:</strong> LIM</p>
-                </div>
-
-                <input type="checkbox" name="accordion" id="vuelo2">
-
-                <label for="vuelo2" class="item">
-                    <div>
-                        <strong>New York → Paris</strong>
-                        <p>05/09/2024 - 15/09/2024</p>
+                    <div class="fila-formulario">
+                        <div class="items-formulario">
+                            <label for="fecha-ida"><i class="fa-solid fa-calendar-days"></i> Ida: </label>
+                            <input type="date" id="fecha-ida" name="fecha-ida" required>
+                        </div>
+                        <div class="items-formulario">
+                            <label for="fecha-vuelta"><i class="fa-solid fa-calendar-days"></i> Vuelta: </label>
+                            <input type="date" id="fecha-vuelta" name="fecha-vuelta">
+                        </div>
                     </div>
-                    <div class="derecha">
-                        <span>$620 USD</span>
-                        <span class="flecha">⌄</span>
+
+                    <div class="fila-formulario">
+                        <div class="items-formulario">
+                            <label for="pasajeros"> <i class="fa-solid fa-user"></i> Pasajeros: </label>
+                            <select id="pasajeros" name="pasajeros">
+                                <option value="1">1 Pasajero</option>
+                                <option value="2">2 Pasajeros</option>
+                                <option value="3">3 Pasajeros</option>
+                            </select>
+                        </div>
+                        <div class="items-formulario">
+                            <label for="clase"> <i class="fa-solid fa-chair"></i> Clase: </label>
+                            <select id="clase" name="clase">
+                                <option value="economica">Económica</option>
+                                <option value="ejecutiva">Ejecutiva</option>
+                                <option value="primera">Primera Clase</option>
+                            </select>
+                        </div>
                     </div>
-                </label>
-
-                <div class="contenido">
-                    <p><strong>Ida:</strong> 15:00 → 08:40 (+1)</p>
-                    <p><strong>Vuelta:</strong> 20:30 → 06:40 (+1)</p>
-                    <p><strong>Escala:</strong> Londres</p>
-                </div>
-
-                <input type="checkbox" name="accordion" id="vuelo3">
-
-                <label for="vuelo3" class="item">
-                    <div>
-                        <strong>Barcelona → Roma</strong>
-                        <p>01/10/2024</p>
+                    <div class="items-formulario_buscar">
+                        <button type="submit" class="btn-search" action="vuelos.html">Buscar Vuelos</button>
                     </div>
-                    <div class="derecha">
-                        <span>$280 USD</span>
-                        <span class="flecha">⌄</span>
-                    </div>
-                </label>
-
-                <div class="contenido">
-                    <p><strong>Ida:</strong> 12:00 → 08:40 (+1)</p>
-                    <p><strong>Vuelta:</strong> 18:30 → 06:40 (+1)</p>
-                    <p><strong>Escala:</strong> Madrid </p>
-                </div>
-
-            </section>
-
-        </div>
+                </form>
+            </div>
+        </section>
     </main>
     <footer>
         <ul class="ul_footer">
-            <img class="img-footer" src="../Imagenes/loguitoPW1.png" alt="Logo PW1">
+            <img class="img-footer" src="Imagenes/loguitoPW1.png" alt="Logo PW1">
             <h3>Integrantes</h3>
             <div class="contenedor-items-footer">
                 <li>Axel

@@ -1,0 +1,237 @@
+option,
+input,
+select {
+    background-color: rgb(40, 40, 48);
+}
+
+
+.fila-formulario {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.titulo-principal {
+    font-size: 1.5rem;
+    color: white;
+    text-align: center;
+}
+
+.busqueda-vuelos {
+    padding: 2.5rem;
+    margin: 1.25rem auto;
+    background-color: rgb(132, 163, 221);
+    border: solid;
+    border-color: black;
+    width: 50rem;
+    flex-direction: column;
+}
+
+.main-form {
+    flex-direction: column;
+    align-items: center;
+}
+
+.items-formulario {
+    color: white;
+    display: flex;
+    margin-left: 3rem;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin: 0.3rem;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.items-formulario_buscar {
+    color: white;
+    display: flex;
+    margin-left: 3rem;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin: 0.3rem;
+    padding: 0;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.items-formulario_buscar button {
+    background-color: white;
+    color: black;
+    border: solid;
+    border-color: rgba(31, 50, 134, 0.692);
+    border-width: 0.0625rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    font-size: large;
+    width: 49.5rem;
+    height: 3rem;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.items-formulario_buscar button:hover {
+    background-color: rgb(166, 180, 206);
+    color: black;
+}
+
+.formulario {
+    padding: 2.5rem;
+    margin: 1.25rem auto;
+    background-color: rgb(132, 163, 221);
+    border: solid;
+    border-color: black;
+    width: 50rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.linea-formulario {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    margin-left: 6.25rem;
+}
+
+.linea-formulario label {
+    width: 5rem;
+    margin-right: 0.625rem;
+    color: white;
+    font-size: large;
+}
+
+#mensaje {
+    width: 25rem;
+    height: 5rem;
+    padding: 0.4rem;
+}
+
+.items-formulario label {
+    font-size: larger;
+}
+
+input[type="text"],
+input[type="date"],
+select {
+    height: 2rem;
+    padding: 0 1rem;
+    border-radius: 0.5rem;
+    border: 0.0625rem solid rgba(255, 255, 255, 0.3);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.ul_footer {
+    list-style: none;
+    text-align: center;
+    color: white;
+    padding: 1.25rem;
+    background-color: rgb(40, 40, 48);
+}
+
+
+.contenedor-items-footer {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-top: 0.9375rem;
+    flex-wrap: wrap;
+}
+
+.ul_footer li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.iconos-redes {
+    display: flex;
+    gap: 0.625rem;
+}
+
+.iconos-redes i {
+    color: rgb(132, 163, 221);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.iconos-redes i:hover {
+    color: white;
+}
+
+.img-footer {
+    width: 12.5rem;
+    height: auto;
+    margin-top: 0.625rem;
+}
+
+.formulario-contacto input[type="text"],
+.formulario-contacto input[type="email"],
+.formulario-contacto input[type="tel"],
+.formulario-contacto textarea {
+    width: 25rem;
+    background-color: rgb(40, 40, 48);
+    color: white;
+    border-radius: 0.625rem;
+    padding: 0.8rem;
+    border: 0.0625rem solid rgba(255, 255, 255, 0.2);
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 8rem;
+    resize: none;
+}
+
+.formulario-contacto input[type="text"],
+.formulario-contacto input[type="email"],
+.formulario-contacto input[type="tel"] {
+    height: 1rem;
+}
+
+.botones-formulario {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+    width: 100%;
+}
+
+.botones-formulario button {
+    cursor: pointer;
+    padding: 0.625rem 1.875rem;
+    font-weight: bold;
+    width: 20rem;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    border: 0.0625rem solid rgba(31, 50, 134, 0.692);
+    border-radius: 0.5rem;
+    transition: background-color 0.3s;
+}
+
+.botones-formulario button:hover {
+    background-color: rgb(166, 180, 206);
+    color: black;
+}
+
+.logo-perfil-container {
+    display: flex;
+    align-items: center;
+    gap: 0.9375rem;
+}
+
+.link-perfil {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
