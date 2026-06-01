@@ -1,0 +1,63 @@
+.botones{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.datosUsuario{
+    display: flex;
+    width: 100%;
+    padding-right: 1rem;
+}
+
+.nombreUsuario{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+}
+
+.contraseña{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+}
+
+
+
+
+
+
+
+
+button,
+option,
+input,
+select,
+input[type="text"] {
+    background-color: rgb(40, 40, 48);
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 0;
+
+}
+
+label{
+    margin-top: 0.5rem;
+}
+
+button{
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+h1{
+    margin: 0;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+}

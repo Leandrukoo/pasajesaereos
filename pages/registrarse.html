@@ -3,9 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../Styles/headerYFooter.css">
+    <link rel="stylesheet" href="../Styles/inicio.css">
+    <link rel="stylesheet" href="../Styles/registrarse.css">
     <title>Registrarse</title>
 </head>
 <body>
-    Hola
+<header>
+        <nav class="nav_header">
+            <div class="logo-perfil-container">
+                <img class="img_header" src="../Imagenes/fondo-transparente.png" alt="PasajesAereos Logo" width="100">
+            </div>
+        </nav>
+    </header>
+
+
+
+
+
+
+
+
+
+
+
+    <main>
+        <h1>Registrarse</h1>
+        <form class="formulario" action="../index.html">
+            <section class="datosUsuario">
+                <div class="nombreUsuario">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" id="apellido" name="apellido" placeholder="Apellido" required>
+                    <label for="email">Correo Electrónico:</label>
+                    <input type="email" id="email" name="email" placeholder="Correo Electrónico" required>
+                    <label for="dni">DNI:</label>
+                    <input type="number" id="dni" name="dni" placeholder="DNI" required>
+
+                </div>
+                <div class="contraseña">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="number" id="telefono" name="telefono" placeholder="Teléfono" required>
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                    <label for="confirm_password">Confirmar Contraseña:</label> 
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar Contraseña" required>
+                </div>
+            </section>
+            <section class="metodoPago">
+
+            </section>
+            <div class="botones">
+            <button type="submit" class="btn">Confirmar</button>
+            <button type="button" id="cancelar" class="btn" onclick="window.location.href='../index.html'">Cancelar</button>
+            </div>
+        </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </main>
+    <footer>
+        <ul class="ul_footer">
+            <img class="img-footer" src="../Imagenes/loguitoPW1.png" alt="Logo PW1">
+            <h3>Integrantes</h3>
+            <div class="contenedor-items-footer">
+                <li>Axel
+                    <div class="iconos-redes">
+                        <a href="https://github.com/AxelSanchez1606" target="_blank"><i
+                                class="fa-brands fa-github"></i></a>
+                        <a href="https://www.linkedin.com/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                </li>
+                <li>Ariel
+                    <div class="iconos-redes">
+                        <a href="https://github.com/Ariel-peralta-A" target="_blank"><i class="fa-brands fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/ariel-peralta-3a089734a/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                </li>
+                <li>Bautista
+                    <div class="iconos-redes">
+                        <a href="https://github.com/bautisoto" target="_blank"><i class="fa-brands fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/bautista-soto-a0a799406/" target="_blank"><i
+                                class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                </li>
+                <li>Leandro
+                    <div class="iconos-redes">
+                        <a href="https://github.com/Leandrukoo" target="_blank"><i class="fa-brands fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/leancastro/?locale=es" target="_blank"><i
+                                class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                </li>
+                <li>Rocio
+                    <div class="iconos-redes">
+                        <a href="https://github.com/Roci-B" target="_blank"><i class="fa-brands fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/rociobossio/" target="_blank"><i
+                                class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                </li>
+            </div>
+        </ul>
+    </footer>
 </body>
 </html>
