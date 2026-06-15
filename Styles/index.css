@@ -1,11 +1,6 @@
-body {
-    margin: 0;
-    padding-bottom: 0;
-}
-
 main {
-    margin-top: 10rem;
-    margin-bottom: 10rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
 .seccion-iniciar-sesion{
@@ -14,7 +9,6 @@ main {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-top: 13rem;
 }
 
 .form-iniciar-sesion{
@@ -24,11 +18,9 @@ main {
     justify-content: center;
     background-color: rgb(132, 163, 221);
     padding: 2.5rem;
-    padding-left: 10rem;
-    padding-right: 10rem;
     border: solid;
     border-color: black;
-    width: 20rem;
+    width: min(90vw, 28rem);
 }
 
 .campo-formulario{
@@ -65,4 +57,364 @@ a {
     color: white;
     margin-top: 0.5rem;
     text-decoration: none;
+}
+
+.fila-formulario {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.titulo-principal {
+    font-size: 1.5rem;
+    color: white;
+    text-align: center;
+}
+
+.titulo-principal h2 {
+    margin: 1rem 0 0.5rem 0;
+    font-size: 2rem;
+}
+
+.titulo-principal h3 {
+    margin: 0.5rem 0 1rem 0;
+    font-size: 1.2rem;
+}
+
+.busqueda-vuelos {
+    padding: 2.5rem;
+    margin: 1.25rem auto;
+    background-color: rgb(132, 163, 221);
+    border: solid;
+    border-color: black;
+    width: 90%;
+    max-width: 50rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.items-formulario {
+    color: white;
+    display: flex;
+    margin-left: 0;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin: 0.3rem;
+    gap: 0.5rem;
+    width: 100%;
+    flex: 1;
+}
+
+.items-formulario button {
+    background-color: rgb(40, 40, 48);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    width: 100%;
+    height: 2rem;
+    margin-top: 1rem;
+    transition: 0.3s;
+}
+
+.items-formulario button:hover {
+    background-color: rgb(80, 80, 90);
+}
+
+.formulario {
+    padding: 2.5rem;
+    margin: 1.25rem auto;
+    background-color: rgb(132, 163, 221);
+    border: solid;
+    border-color: black;
+    width: 90%;
+    max-width: 50rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.linea-formulario {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    margin-left: 0;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.linea-formulario label {
+    width: auto;
+    margin-right: 0.625rem;
+    color: white;
+    font-size: large;
+}
+
+#mensaje {
+    width: 100%;
+    max-width: 25rem;
+    height: 5rem;
+    padding: 0.4rem;
+    box-sizing: border-box;
+}
+
+.items-formulario label {
+    font-size: larger;
+    color: white;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+select {
+    height: 2rem;
+    padding: 0 1rem;
+    border-radius: 0.5rem;
+    border: 0.0625rem solid rgba(255, 255, 255, 0.3);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+textarea {
+    width: 100%;
+    max-width: 25rem;
+    height: 5rem;
+    padding: 0.4rem;
+    background-color: rgb(40, 40, 48);
+    color: white;
+    border-radius: 0.625rem;
+    border: 0.0625rem solid rgba(255, 255, 255, 0.3);
+    box-sizing: border-box;
+    resize: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.ul_footer {
+    list-style: none;
+    text-align: center;
+    color: white;
+    padding: 1.25rem;
+    background-color: rgb(40, 40, 48);
+}
+
+.contenedor-items-footer {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-top: 0.9375rem;
+    flex-wrap: wrap;
+}
+
+.ul_footer li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.iconos-redes {
+    display: flex;
+    gap: 0.625rem;
+}
+
+.iconos-redes a {
+    text-decoration: none;
+}
+
+.iconos-redes i {
+    color: rgb(132, 163, 221);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.iconos-redes i:hover {
+    color: white;
+    transform: scale(1.2);
+}
+
+.img-footer {
+    width: auto;
+    height: 2rem;
+    margin-top: 0.625rem;
+}
+
+.formulario-contacto input[type="text"],
+.formulario-contacto input[type="email"],
+.formulario-contacto input[type="tel"],
+.formulario-contacto textarea {
+    background-color: rgb(40, 40, 48);
+    color: white;
+    border-radius: 0.625rem;
+    padding: 0.8rem;
+    border: 0.0625rem solid rgba(255, 255, 255, 0.2);
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 25rem;
+}
+
+.botones-formulario {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.botones-formulario button {
+    cursor: pointer;
+    padding: 0.625rem 1.875rem;
+    font-weight: bold;
+    width: auto;
+    min-width: 10rem;
+    background-color: rgb(40, 40, 48);
+    color: white;
+    border: 0.0625rem solid rgba(255, 255, 255, 0.5);
+    border-radius: 0.5rem;
+    transition: 0.3s;
+}
+
+.botones-formulario button:hover {
+    background-color: rgb(132, 163, 221);
+    color: black;
+    transform: scale(1.05);
+}
+
+.logo-perfil-container {
+    display: flex;
+    align-items: center;
+    gap: 0.9375rem;
+}
+
+.link-perfil {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* ============================================
+   RESPONSIVE - TABLETS (1024px)
+   ============================================ */
+@media (max-width: 1024px) {
+    .busqueda-vuelos,
+    .formulario {
+        padding: 1.5rem;
+        width: 95%;
+    }
+
+    .fila-formulario {
+        flex-direction: column;
+    }
+
+    .items-formulario {
+        width: 100%;
+    }
+}
+
+/* ============================================
+   RESPONSIVE - MÓVIL (768px)
+   ============================================ */
+@media (max-width: 768px) {
+    .titulo-principal {
+        font-size: 1.2rem;
+    }
+
+    .titulo-principal h2 {
+        font-size: 1.5rem;
+    }
+
+    .titulo-principal h3 {
+        font-size: 1rem;
+    }
+
+    .busqueda-vuelos,
+    .formulario {
+        padding: 1rem;
+        width: 98%;
+        margin: 1rem auto;
+    }
+
+    .fila-formulario {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .items-formulario {
+        width: 100%;
+        margin: 0;
+    }
+
+    .items-formulario button {
+        height: 2.5rem;
+        font-size: 1rem;
+    }
+
+    .linea-formulario {
+        flex-direction: column;
+        margin-left: 0;
+        align-items: flex-start;
+    }
+
+    .linea-formulario label {
+        width: 100%;
+    }
+
+    .formulario-contacto input[type="text"],
+    .formulario-contacto input[type="email"],
+    .formulario-contacto input[type="tel"],
+    .formulario-contacto textarea {
+        max-width: 100%;
+    }
+
+    #mensaje {
+        max-width: 100%;
+    }
+}
+
+/* ============================================
+   RESPONSIVE - MÓVIL PEQUEÑO (480px)
+   ============================================ */
+@media (max-width: 480px) {
+    body {
+        margin-top: 5rem;
+    }
+
+    .titulo-principal h2 {
+        font-size: 1.2rem;
+    }
+
+    .busqueda-vuelos,
+    .formulario {
+        padding: 0.8rem;
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+
+    .items-formulario button {
+        height: 2.5rem;
+        font-size: 0.9rem;
+    }
+
+    .botones-formulario {
+        flex-direction: column;
+    }
+
+    .botones-formulario button {
+        width: 100%;
+    }
 }

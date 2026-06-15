@@ -1,12 +1,14 @@
 * {
     color: white;
+    box-sizing: border-box;
 }
 
 /* main */
 body {
     margin: 0;
-    margin-left: 20px;
     margin-top: 7.8rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
     font-family: Arial, Helvetica, sans-serif;
     background-color: rgb(22, 22, 63);
     padding-bottom: 7rem;
@@ -20,24 +22,40 @@ header {
     background-color: rgb(10, 96, 99);
     text-align: center;
     padding: 1rem;
+    z-index: 1000;
 }
 
 .nav_header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    max-width: 100%;
+    padding: 0 1rem;
+}
+
+.logo-perfil-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 .img_header {
-    margin-left: 5rem;
     height: 3rem;
+    width: auto;
+}
+
+.link-perfil {
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
 }
 
 .ul_header {
     list-style: none;
     display: flex;
     gap: 2rem;
-    margin-right: 5rem;
+    margin: 0;
+    padding: 0;
 }
 
 .li_header a {
@@ -46,6 +64,7 @@ header {
     font-size: 1.2rem;
     padding: 10px 5px;
     border-radius: 5px;
+    transition: 0.3s;
 }
 
 .nav_header .logo-perfil-container a:hover {
@@ -63,6 +82,7 @@ footer {
     width: 100%;
     text-align: center;
     background-color: rgb(60, 60, 73);
+    z-index: 999;
 }
 
 .ul_footer {
@@ -74,9 +94,116 @@ footer {
     color: white;
     height: 5rem;
     justify-content: center;
+    padding: 0 1rem;
+    flex-wrap: wrap;
+}
+
+.img-footer {
+    height: 3rem;
+    width: auto;
+}
+
+.contenedor-items-footer {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.iconos-redes {
+    display: flex;
+    gap: 0.5rem;
 }
 
 p {
     margin-right: 2rem;
     font-size: 1rem;
+}
+
+/* ============================================
+   RESPONSIVE - TABLETS
+   ============================================ */
+@media (max-width: 1024px) {
+    body {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+    }
+
+    .nav_header {
+        padding: 0 0.5rem;
+    }
+
+    .ul_header {
+        gap: 1rem;
+    }
+
+    .li_header a {
+        font-size: 1rem;
+    }
+}
+
+/* ============================================
+   RESPONSIVE - MÓVIL
+   ============================================ */
+@media (max-width: 768px) {
+    body {
+        margin-top: 6rem;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    header {
+        padding: 0.5rem;
+    }
+
+    .nav_header {
+        padding: 0;
+    }
+
+    .logo-perfil-container {
+        gap: 0.5rem;
+    }
+
+    .img_header {
+        height: 2rem;
+    }
+
+    .link-perfil {
+        font-size: 0.9rem;
+    }
+
+    .ul_footer {
+        height: auto;
+        gap: 1rem;
+        padding: 1rem 0.5rem;
+    }
+
+    .contenedor-items-footer {
+        gap: 1rem;
+        width: 100%;
+    }
+
+    p {
+        margin-right: 0;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .img_header {
+        height: 1.5rem;
+    }
+
+    .li_header a {
+        font-size: 0.9rem;
+        padding: 5px 3px;
+    }
+
+    .ul_footer {
+        height: auto;
+        gap: 0.5rem;
+    }
+
+    .img-footer {
+        height: 2rem;
+    }
 }
