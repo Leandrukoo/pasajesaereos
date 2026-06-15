@@ -1,5 +1,5 @@
 body {
-  width: 80%;
+  width: min(95%, 80rem);
   margin: 0 auto;
   margin-top: 8rem;
   margin-bottom: 3rem;
@@ -171,4 +171,72 @@ body {
 
 #btn-continuar:hover {
   background-color: rgb(166, 180, 206);
+}
+
+/* ============================================
+   RESPONSIVE — TABLET (768px)
+   Apila los dos paneles verticalmente
+   ============================================ */
+@media (max-width: 768px) {
+  body {
+    width: 95%;
+    margin-top: 6rem;
+  }
+
+  .contenedores {
+    flex-direction: column;
+  }
+
+  .Horarios {
+    width: 100%;
+  }
+
+  .seleccion-asiento {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    align-items: center;
+  }
+
+  .titulo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .titulo h2 {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+  }
+}
+
+/* ============================================
+   RESPONSIVE — MÓVIL (480px)
+   ============================================ */
+@media (max-width: 480px) {
+  body {
+    width: 100%;
+    margin-top: 5.5rem;
+    padding: 0 0.5rem;
+    box-sizing: border-box;
+  }
+
+  .seleccion-asiento {
+    padding: 1rem;
+    border-radius: 0.3rem;
+  }
+
+  .titulo h2 {
+    font-size: 1rem;
+  }
+
+  .leyenda {
+    gap: 0.8rem;
+  }
+
+  #btn-continuar {
+    align-self: center;
+    width: 100%;
+    max-width: 20rem;
+  }
 }

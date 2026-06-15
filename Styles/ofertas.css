@@ -94,47 +94,56 @@
   color: black;
 }
 
-.ul_footer {
-  list-style: none;
-  text-align: center;
-  color: white;
-  padding: 1.25rem;
-  background-color: rgb(40, 40, 48);
+/* ============================================
+   RESPONSIVE — TABLET (640px)
+   La tarjeta pasa de fila a columna
+   ============================================ */
+@media (max-width: 640px) {
+  .ofertas-seccion {
+    padding: 0 1rem;
+  }
+
+  .oferta-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .oferta-ruta {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .oferta-precios {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .btn-oferta {
+    width: 100%;
+    text-align: center;
+  }
 }
 
+/* ============================================
+   RESPONSIVE — MÓVIL (480px)
+   ============================================ */
+@media (max-width: 480px) {
+  .ciudad {
+    font-size: 0.9rem;
+  }
 
-.contenedor-items-footer {
-  display: flex;
-  justify-content: center;
-  gap: 2.5rem;
-  margin-top: 0.9375rem;
-  flex-wrap: wrap;
+  .oferta-card {
+    padding: 1rem;
+  }
+
+  .titulo-principal h2 {
+    font-size: 1.4rem;
+  }
+
+  .titulo-principal h3 {
+    font-size: 1rem;
+  }
 }
 
-.ul_footer li {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.625rem;
-}
-
-.iconos-redes {
-  display: flex;
-  gap: 0.625rem;
-}
-
-.iconos-redes i {
-  color: rgb(132, 163, 221);
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
-.iconos-redes i:hover {
-  color: white;
-}
-
-.img-footer {
-  width: 12.5rem;
-  height: auto;
-  margin-top: 0.625rem;
-}

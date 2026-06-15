@@ -25,9 +25,13 @@
 
 .sidebar-perfil li a {
     text-decoration: none;
+    color: white;
 }
 .sidebar-perfil li.active {
     background-color: rgb(132, 163, 221);
+}
+.sidebar-perfil li.active a {
+    color: black;
 }
 
 .contenido-perfil {
@@ -97,4 +101,56 @@
 .perfil-item p {
     margin: 0.3rem 0 0 0;
     font-weight: bold;
+}
+
+/* ============================================
+   RESPONSIVE — TABLET (768px)
+   Sidebar pasa a estar encima del contenido
+   ============================================ */
+@media (max-width: 768px) {
+    .contenedor-perfil {
+        flex-direction: column;
+        padding: 0 1rem;
+        margin-top: 5rem;
+    }
+
+    .sidebar-perfil {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid rgb(132, 163, 221);
+        padding-right: 0;
+        padding-bottom: 1rem;
+    }
+
+    .sidebar-perfil ul {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .sidebar-perfil li {
+        margin-bottom: 0;
+    }
+
+    .contenido-perfil {
+        width: 100%;
+    }
+}
+
+/* ============================================
+   RESPONSIVE — MÓVIL (480px)
+   ============================================ */
+@media (max-width: 480px) {
+    .contenedor-perfil {
+        padding: 0 0.75rem;
+        margin-top: 4.5rem;
+    }
+
+    .perfil-card {
+        padding: 1rem;
+    }
+
+    .sidebar-perfil ul {
+        flex-direction: column;
+    }
 }

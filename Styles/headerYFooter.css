@@ -1,5 +1,4 @@
 * {
-    color: white;
     box-sizing: border-box;
 }
 
@@ -11,7 +10,23 @@ body {
     margin-right: 1rem;
     font-family: Arial, Helvetica, sans-serif;
     background-color: rgb(22, 22, 63);
-    padding-bottom: 7rem;
+    color: white;
+    padding-bottom: 2rem;
+    min-height: calc(100vh - 7.8rem);
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+input,
+button,
+select,
+textarea,
+option {
+    color: white;
 }
 
 header {
@@ -76,42 +91,78 @@ header {
 }
 
 footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
     background-color: rgb(60, 60, 73);
-    z-index: 999;
+    padding: 2.5rem 4rem;
+    margin-top: 3rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
 }
 
-.ul_footer {
+.footer-contenido {
     display: flex;
-    align-items: center;
     gap: 2rem;
-    list-style: none;
-    margin: 0;
-    color: white;
-    height: 5rem;
-    justify-content: center;
-    padding: 0 1rem;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
     flex-wrap: wrap;
 }
 
-.img-footer {
-    height: 3rem;
-    width: auto;
+.footer-columna {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    min-width: 130px;
 }
 
-.contenedor-items-footer {
+.footer-columna h4 {
+    color: white;
+    margin: 0 0 0.6rem 0;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.footer-columna ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.footer-columna li {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.footer-columna a {
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+}
+
+.footer-columna a:hover {
+    color: white;
+}
+
+.footer-columna p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.85rem;
+}
+
+.img-footer-logo {
+    height: 2.5rem;
+    width: auto;
+    margin-top: 0.5rem;
+    align-self: flex-start;
+}
+
+.footer-team {
     display: flex;
     gap: 2rem;
-    list-style: none;
-}
-
-.iconos-redes {
-    display: flex;
-    gap: 0.5rem;
 }
 
 p {
@@ -126,6 +177,13 @@ p {
     body {
         margin-left: 0.5rem;
         margin-right: 0.5rem;
+    }
+
+    footer {
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+        padding-left: 3.5rem;
+        padding-right: 3.5rem;
     }
 
     .nav_header {
@@ -149,6 +207,7 @@ p {
         margin-top: 6rem;
         margin-left: 0;
         margin-right: 0;
+        min-height: calc(100vh - 6rem);
     }
 
     header {
@@ -171,15 +230,15 @@ p {
         font-size: 0.9rem;
     }
 
-    .ul_footer {
-        height: auto;
-        gap: 1rem;
-        padding: 1rem 0.5rem;
+    footer {
+        padding: 2rem 1.5rem;
+        margin-top: 2rem;
+        margin-left: 0;
+        margin-right: 0;
     }
 
-    .contenedor-items-footer {
-        gap: 1rem;
-        width: 100%;
+    .footer-contenido {
+        gap: 1.5rem;
     }
 
     p {
@@ -198,12 +257,12 @@ p {
         padding: 5px 3px;
     }
 
-    .ul_footer {
-        height: auto;
-        gap: 0.5rem;
+    footer {
+        padding: 1.5rem 1rem;
     }
 
-    .img-footer {
-        height: 2rem;
+    .footer-contenido {
+        flex-direction: column;
+        gap: 1.5rem;
     }
 }

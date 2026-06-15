@@ -12,7 +12,7 @@
 }
 
 .mis-reservas {
-    width: 600px;
+    width: min(100%, 600px);
     margin: auto;
     margin-top: 0;
     background-color: rgb(132, 163, 221);
@@ -68,10 +68,81 @@
 }
 
 input:checked+.item+.contenido {
-    max-height: 200px;
+    max-height: 400px;
     padding: 1rem;
 }
 
 input:checked+.item .flecha {
     transform: rotate(180deg);
+}
+
+.reserva-vacia {
+    text-align: center;
+    padding: 2rem;
+    color: #FFC107;
+}
+
+.reserva-vacia a {
+    color: #2196F3;
+    text-decoration: none;
+}
+
+.estado-confirmada {
+    color: #4CAF50;
+}
+
+.estado-cancelada {
+    color: #FFC107;
+}
+
+.reserva-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.reserva-pago-info {
+    background-color: rgba(40, 40, 48, 0.5);
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.reserva-descuento {
+    color: #4CAF50;
+}
+
+/* ============================================
+   RESPONSIVE — TABLET (768px)
+   ============================================ */
+@media (max-width: 768px) {
+    .reservas-container {
+        width: 100%;
+    }
+}
+
+/* ============================================
+   RESPONSIVE — MÓVIL (600px)
+   El grid de info colapsa a una columna
+   ============================================ */
+@media (max-width: 600px) {
+    .reserva-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   RESPONSIVE — MÓVIL PEQUEÑO (480px)
+   ============================================ */
+@media (max-width: 480px) {
+    .item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+    }
+
+    .derecha {
+        align-self: flex-end;
+    }
 }

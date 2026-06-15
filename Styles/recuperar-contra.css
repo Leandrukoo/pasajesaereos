@@ -1,37 +1,29 @@
-body {
-    margin: 0;
-    padding-bottom: 0;
-}
-
 main {
-    margin-top: 10rem;
-    margin-bottom: 10rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
-.seccion-recuperar-contra{
+.seccion-recuperar-contra {
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-top: 13rem;
 }
 
-.form-recuperar-contra{
-        display: flex;
+.form-recuperar-contra {
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: rgb(132, 163, 221);
     padding: 2.5rem;
-    padding-left: 10rem;
-    padding-right: 10rem;
     border: solid;
     border-color: black;
-    width: 20rem;
+    width: min(90vw, 28rem);
 }
 
-.campo-formulario{
+.campo-formulario {
     margin-bottom: 15px;
     width: 100%;
     display: flex;
@@ -39,14 +31,28 @@ main {
     flex-direction: column;
 }
 
-.botones{
-    display: flex;
-    justify-content: space-between;
-    width: 50%;
+.campo-formulario input {
+    width: 100%;
+    box-sizing: border-box;
+    color: white;
 }
 
-.btn-recuperar-contra{
-    width: 4.5rem;
+.botones {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.btn-recuperar-contra {
+    flex: 1;
+    max-width: 8rem;
+}
+
+.button_pagar {
+    flex: 1;
+    max-width: 8rem;
 }
 
 label {
@@ -80,4 +86,18 @@ a {
     color: white;
     margin-top: 0.5rem;
     text-decoration: none;
+}
+
+@media (max-width: 480px) {
+    .form-recuperar-contra {
+        padding: 1.5rem;
+        width: 100vw;
+        border-left: none;
+        border-right: none;
+    }
+
+    .btn-recuperar-contra,
+    .button_pagar {
+        max-width: 100%;
+    }
 }
