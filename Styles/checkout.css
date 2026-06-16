@@ -96,10 +96,7 @@ button{
     margin-left: 2rem;
 }
 
-/* ============================================
-   RESPONSIVE — TABLET (768px)
-   Las tres columnas del grid se apilan
-   ============================================ */
+
 @media (max-width: 768px) {
     .contenido {
         grid-template-areas:
@@ -142,10 +139,34 @@ button{
         flex: 1;
     }
 }
+    #datosTarjeta {
+        display: none;
+        margin-top: 1rem;
+        padding: 1rem;
+        background-color: rgb(40, 40, 48);
+        border: 2px solid rgb(82, 114, 175);
+        border-radius: 0.5rem;
+    }
 
-/* ============================================
-   RESPONSIVE — MÓVIL (480px)
-   ============================================ */
+    #datosTarjeta label {
+        display: block;
+        color: white;
+        margin-top: 0.5rem;
+        margin-bottom: 0.3rem;
+        font-weight: bold;
+    }
+
+    #datosTarjeta input {
+        width: 100%;
+        border: 1px solid rgb(82, 114, 175);
+        border-radius: 0.3rem;
+    }
+
+    #datosTarjeta input:focus {
+        outline: none;
+        border-color: white;
+    }
+
 @media (max-width: 480px) {
     h1 {
         font-size: 1.3rem;
@@ -172,5 +193,8 @@ button{
 
     #cancelar {
         margin-left: 0;
+    }
+    #datosTarjeta {
+    padding: 0.75rem;
     }
 }

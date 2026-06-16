@@ -1,4 +1,3 @@
-// Datos de perfil 
 const perfilPorDefecto = {
     nombre: 'Juan Pérez',
     dni: '12345678',
@@ -15,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// Cargar perfil del usuario
 function cargarPerfilUsuario() {
     const usuarioLogueado = cargarDatos('usuarioLogueado');
     const datosCheckout = cargarDatos('datosCheckout');
@@ -35,33 +33,27 @@ function cargarPerfilUsuario() {
         guardarDatos('perfilUsuario', perfilUsuario);
     }
 
-    // Actualizar nombre en header
     const linkPerfil = document.querySelector('.link-perfil');
     if (linkPerfil) {
         linkPerfil.textContent = `¡Hola, ${perfilUsuario.nombre.split(' ')[0]}!`;
     }
 
-    // Actualizar nombre en sidebar
     const nombreSidebar = document.querySelector('.sidebar-perfil h3');
     if (nombreSidebar) {
         nombreSidebar.textContent = perfilUsuario.nombre;
     }
 
-    // Actualizar items del perfil
     actualizarItemsPerfil(perfilUsuario);
 
     console.log('✓ Perfil de usuario cargado:', perfilUsuario);
 }
 
-
-// Actualizar items del perfil 
 function actualizarItemsPerfil(perfil) {
     const perfilCard = document.querySelector('.perfil-card');
     if (!perfilCard) return;
 
     const perfilItems = perfilCard.querySelectorAll('.perfil-item');
 
-    // Mapeo de items a propiedades
     const mapeo = [
         { etiqueta: 'Nombre completo', propiedad: 'nombre' },
         { etiqueta: 'DNI', propiedad: 'dni' },
@@ -80,7 +72,6 @@ function actualizarItemsPerfil(perfil) {
         }
     });
 
-    // Agregar botón de editar
     if (!perfilCard.querySelector('.btn-editar-perfil')) {
         agregarBotonesEdicion(perfilCard);
     }
@@ -88,7 +79,6 @@ function actualizarItemsPerfil(perfil) {
     console.log('✓ Items del perfil actualizados');
 }
 
-// Agregar botones de edición
 function agregarBotonesEdicion(perfilCard) {
     const contenedorBotones = document.createElement('div');
     contenedorBotones.className = 'botones-perfil';
@@ -105,7 +95,6 @@ function agregarBotonesEdicion(perfilCard) {
 
     perfilCard.appendChild(contenedorBotones);
 
-    // Estilos para botones
     const estilo = document.createElement('style');
     estilo.textContent = `
         .botones-perfil button {
@@ -145,7 +134,6 @@ function agregarBotonesEdicion(perfilCard) {
     }
 }
 
-// Habilitar edición de perfil
 function habilitarEdicion() {
     const perfilItems = document.querySelectorAll('.perfil-item');
 
@@ -171,7 +159,6 @@ function habilitarEdicion() {
         }
     });
 
-    // Cambiar botón de editar a guardar
     const btnEditar = document.querySelector('.btn-editar-perfil');
     if (btnEditar) {
         btnEditar.textContent = 'Guardar Cambios';
@@ -183,8 +170,6 @@ function habilitarEdicion() {
     mostrarNotificacion('Modo edición activado', 'info');
 }
 
-
-// Guardar cambios del perfil
 function guardarCambiosPerfil() {
     const perfilCard = document.querySelector('.perfil-card');
     const inputs = perfilCard.querySelectorAll('.input-edicion-perfil');
@@ -204,22 +189,18 @@ function guardarCambiosPerfil() {
             perfilActualizado[mapeo[index]] = input.value;
         }
 
-        // Convertir input a párrafo
         const p = document.createElement('p');
         p.textContent = input.value;
         input.replaceWith(p);
     });
 
-    // Guardar perfil
     guardarDatos('perfilUsuario', perfilActualizado);
 
-    // Actualizar nombre en header
     const linkPerfil = document.querySelector('.link-perfil');
     if (linkPerfil) {
         linkPerfil.textContent = `¡Hola, ${perfilActualizado.nombre.split(' ')[0]}!`;
     }
 
-    // Cambiar botón de guardar a editar
     const btnGuardar = document.querySelector('.btn-editar-perfil');
     if (btnGuardar) {
         btnGuardar.textContent = 'Editar Perfil';
@@ -232,18 +213,16 @@ function guardarCambiosPerfil() {
     console.log('✓ Perfil actualizado:', perfilActualizado);
 }
 
-// Configurar navegación del perfil
 function configurarNavegacionPerfil() {
     const sidebarLinks = document.querySelectorAll('.sidebar-perfil a');
 
     sidebarLinks.forEach(link => {
         link.addEventListener('click', function() {
-            // Remover clase active de todos
+
             document.querySelectorAll('.sidebar-perfil li').forEach(li => {
                 li.classList.remove('active');
             });
 
-            // Agregar clase active al actual
             this.closest('li').classList.add('active');
         });
     });
@@ -251,17 +230,14 @@ function configurarNavegacionPerfil() {
     console.log('✓ Navegación del perfil configurada');
 }
 
-// Cerrar sesión
 function salirDeSesion() {
     if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
-        // Limpiar datos de sesión
         limpiarDatos('perfilUsuario');
         limpiarDatos('datosCheckout');
         limpiarDatos('vueloSeleccionado');
 
         mostrarNotificacion('Sesión cerrada', 'info');
 
-        // Redirigir a inicio
         setTimeout(() => {
             redirigir('../index.html');
         }, 1500);

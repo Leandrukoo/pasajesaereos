@@ -1,5 +1,3 @@
-// Form de login
-
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('.form-iniciar-sesion');
     if (!form) return;

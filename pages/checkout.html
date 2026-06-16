@@ -57,8 +57,30 @@
             <section class="pago">
                 <h2>Metodo de pago</h2>
                 <section class="metodo_pago_radio">
-                    <label><input type="radio" name="tipo" value="ida-vuelta" required>Tarjeta de credito</label>
-                    <label><input type="radio" name="tipo" value="solo-ida">Transferencia bancaria</label>
+                    <label>
+                        <input type="radio" name="tipo" value="tarjeta" required>
+                        Tarjeta de crédito
+                    </label>
+
+                    <label>
+                        <input type="radio" name="tipo" value="debito">
+                        Tarjeta de débito
+                    </label>
+
+
+                    <div id="datosTarjeta">
+                        <label for="numeroTarjeta">Número de tarjeta</label>
+                        <input type="text" id="numeroTarjeta" maxlength="16">
+
+                        <label for="titularTarjeta">Titular</label>
+                        <input type="text" id="titularTarjeta">
+
+                        <label for="vencimientoTarjeta">Vencimiento</label>
+                        <input type="month" id="vencimientoTarjeta">
+
+                        <label for="cvvTarjeta">CVV</label>
+                        <input type="text" id="cvvTarjeta" maxlength="3">
+                    </div>
                 </section>
             </section>
             <section class="resumen">

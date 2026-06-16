@@ -1,5 +1,3 @@
-// Form de busqueda
-
 document.addEventListener('DOMContentLoaded', function() {
     inicializarFormulario();
     cargarDatosFormulario();

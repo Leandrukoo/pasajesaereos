@@ -1,4 +1,3 @@
-// Datos de ofertas
 const ofertasMock = [
     {
         id: 1,
@@ -67,19 +66,16 @@ document.addEventListener('DOMContentLoaded', function() {
     configurarEventosOfertas();
 });
 
-// Inicializar ofertas
 function inicializarOfertas() {
     console.log('✓ Ofertas.js cargado');
     mostrarOfertas(ofertasMock);
 }
 
-// Mostrar ofertas en la UI
 function mostrarOfertas(ofertas) {
     const ofertasLista = document.querySelector('.ofertas-lista');
 
     if (!ofertasLista) return;
 
-    // Limpiar contenido anterior
     ofertasLista.innerHTML = '';
 
     if (ofertas.length === 0) {
@@ -87,7 +83,6 @@ function mostrarOfertas(ofertas) {
         return;
     }
 
-    // Crear tarjetas de ofertas
     ofertas.forEach(oferta => {
         const card = document.createElement('div');
         card.className = 'oferta-card';
@@ -118,18 +113,15 @@ function mostrarOfertas(ofertas) {
     console.log(`✓ ${ofertas.length} ofertas mostradas`);
 }
 
-// Aplicar oferta y redirigir
 function aplicarOferta(ofertaId) {
     const oferta = ofertasMock.find(o => o.id === ofertaId);
 
     if (!oferta) return;
 
-    // Guardar oferta aplicada
     guardarDatos('ofertaAplicada', oferta);
 
     mostrarNotificacion(`Oferta ${oferta.destino} aplicada`, 'exito');
 
-    // Redirigir a vuelos
     setTimeout(() => {
         redirigir('vuelos.html', 500);
     }, 1000);
@@ -137,9 +129,7 @@ function aplicarOferta(ofertaId) {
     console.log('✓ Oferta aplicada:', oferta);
 }
 
-// Configurar eventos de ofertas
 function configurarEventosOfertas() {
-    // Agregar efecto hover a tarjetas
     const cards = document.querySelectorAll('.oferta-card');
 
     cards.forEach(card => {
@@ -159,13 +149,11 @@ function configurarEventosOfertas() {
         });
     });
 
-    // Agregar boton de filtro si es necesario
     agregarFiltrosOfertas();
 
     console.log('✓ Eventos de ofertas configurados');
 }
 
-// Agregar filtros de ofertas
 function agregarFiltrosOfertas() {
     const ofertasSeccion = document.querySelector('.ofertas-seccion');
 
@@ -188,13 +176,11 @@ function agregarFiltrosOfertas() {
         <button onclick="filtrarOfertas('proxima-vencer')" class="btn-filtro">Próximo a vencer</button>
     `;
 
-    // Insertar despues del título
     const titulo = ofertasSeccion.querySelector('.titulo-principal');
     if (titulo) {
         titulo.insertAdjacentElement('afterend', filtrosDiv);
     }
 
-    // Estilos para botones de filtro
     const estilo = document.createElement('style');
     estilo.textContent = `
         .btn-filtro {
@@ -225,17 +211,14 @@ function agregarFiltrosOfertas() {
     }
 }
 
-// Filtrar ofertas
 function filtrarOfertas(criterio) {
     let ofertasFiltradas = [...ofertasMock];
 
-    // Actualizar botones activos
     document.querySelectorAll('.btn-filtro').forEach(btn => {
         btn.classList.remove('active');
     });
     event.target.classList.add('active');
 
-    // Aplicar filtro
     switch (criterio) {
         case 'mayor-descuento':
             ofertasFiltradas.sort((a, b) => b.descuento - a.descuento);
@@ -247,7 +230,6 @@ function filtrarOfertas(criterio) {
             ofertasFiltradas.sort((a, b) => new Date(a.validoHasta) - new Date(b.validoHasta));
             break;
         default:
-            // Todas - orden original
             ofertasFiltradas = [...ofertasMock];
     }
 
@@ -257,7 +239,6 @@ function filtrarOfertas(criterio) {
     console.log(`✓ Ofertas filtradas por: ${criterio}`);
 }
 
-// Ahorros totales de ofertas
 function calcularAhorroTotal() {
     const ahorroTotal = ofertasMock.reduce((total, oferta) => {
         return total + (oferta.precioOriginal - oferta.precioOferta);

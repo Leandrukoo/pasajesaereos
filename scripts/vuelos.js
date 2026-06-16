@@ -1,4 +1,3 @@
-// Array de vuelos
 const vuelosMock = [
     { id: 1, origen: 'BUE', destino: 'MAD', horaSalida: '05:45', horaLlegada: '08:00', tipo: 'Directo', duracion: '2 h 15m', precio: 500, aerolinea: 'aerolinea1', equipaje: true },
     { id: 2, origen: 'BUE', destino: 'MAD', horaSalida: '08:00', horaLlegada: '11:30', tipo: 'Con escala', duracion: '4 h 30m', precio: 350, aerolinea: 'aerolinea2', equipaje: false },
@@ -18,14 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
     configurarFiltros();
 });
 
-// Inicializar vuelos
 function inicializarVuelos() {
     console.log('✓ Vuelos.js cargado');
     renderizarVuelos();
     aplicarFiltros();
 }
 
-// Renderizar tarjetas de vuelos
 function renderizarVuelos() {
     const contenedor = document.querySelector('.aerolineas');
     if (!contenedor) return;
@@ -54,12 +51,10 @@ function renderizarVuelos() {
     });
 }
 
-// Mostrar datos de la búsqueda anterior
 function mostrarDatosBusqueda() {
     const datosBusqueda = cargarDatos('datosBusquedaVuelos');
 
     if (datosBusqueda) {
-        // Crear resumen de búsqueda (opcional)
         const resumenBusqueda = document.createElement('div');
         resumenBusqueda.className = 'resumen-busqueda';
         resumenBusqueda.innerHTML = `
@@ -82,13 +77,11 @@ function mostrarDatosBusqueda() {
     }
 }
 
-// Configurar event de filtros
 function configurarFiltros() {
     const rangeInput = document.getElementById('range');
     const rangeLabel = document.querySelector('.rango');
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
-    // Event para el rango de precio
     rangeInput.addEventListener('input', function() {
         const minPrecio = 300;
         const maxPrecio = 1000;
@@ -97,18 +90,15 @@ function configurarFiltros() {
         aplicarFiltros();
     });
 
-    // Event para checkboxes
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', aplicarFiltros);
     });
 }
 
-// Aplicar filtros a los vuelos
 function aplicarFiltros() {
     const rangeInput = document.getElementById('range');
     const precioMaximo = parseInt(rangeInput.value);
 
-    // Obtener checkboxes seleccionados
     const directoChecked = document.getElementById('directo').checked;
     const conEscalaChecked = document.getElementById('con_escala').checked;
     const aerolinea1Checked = document.getElementById('aerolinea1').checked;
@@ -125,12 +115,10 @@ function aplicarFiltros() {
         const vuelo = vuelosMock[index];
         let mostrarVuelo = true;
 
-        // Filtro 1: Precio
         if (vuelo.precio > precioMaximo) {
             mostrarVuelo = false;
         }
 
-        // Filtro 2: Tipo de vuelo
         if (mostrarVuelo) {
             const tipoVueloValido =
                 (directoChecked && vuelo.tipo === 'Directo') ||
@@ -142,7 +130,6 @@ function aplicarFiltros() {
             }
         }
 
-        // Filtro 3: Aerolínea
         if (mostrarVuelo) {
             const aerolineaValida =
                 (aerolinea1Checked && vuelo.aerolinea === 'aerolinea1') ||
@@ -155,12 +142,10 @@ function aplicarFiltros() {
             }
         }
 
-        // Filtro 4: Equipaje
         if (mostrarVuelo && equipajeChecked && !vuelo.equipaje) {
             mostrarVuelo = false;
         }
 
-        // Mostrar u ocultar vuelo
         if (mostrarVuelo) {
             vueloElement.style.display = 'flex';
             vuelosVisibles++;
@@ -169,11 +154,9 @@ function aplicarFiltros() {
         }
     });
 
-    // Actualizar contador de resultados
     actualizarContadorResultados(vuelosVisibles);
 }
 
-// Actualizar contador de resultados
 function actualizarContadorResultados(cantidad) {
     let contador = document.querySelector('.contador-resultados');
 
@@ -199,7 +182,6 @@ function actualizarContadorResultados(cantidad) {
     `;
 }
 
-// Guardar vuelo seleccionado
 function guardarVueloSeleccionado(vueloId) {
     const vuelo = vuelosMock.find(v => v.id === vueloId);
     if (vuelo) {
@@ -209,7 +191,6 @@ function guardarVueloSeleccionado(vueloId) {
     }
 }
 
-// Ordenar vuelos
 function ordenarVuelos(criterio) {
     const contenedorVuelos = document.querySelector('.aerolineas');
     const vuelos = Array.from(document.querySelectorAll('.aereolinea'));
@@ -226,7 +207,6 @@ function ordenarVuelos(criterio) {
         } else if (criterio === 'precio-desc') {
             return vueloB.precio - vueloA.precio;
         } else if (criterio === 'duracion-asc') {
-            // Ordenar por duración (convertir a minutos)
             const minutosA = extraerMinutos(vueloA.duracion);
             const minutosB = extraerMinutos(vueloB.duracion);
             return minutosA - minutosB;
@@ -234,7 +214,6 @@ function ordenarVuelos(criterio) {
         return 0;
     });
 
-    // Reordenar elementos en el DOM
     vuelos.forEach(vuelo => {
         contenedorVuelos.appendChild(vuelo);
     });
@@ -242,7 +221,6 @@ function ordenarVuelos(criterio) {
     console.log(`✓ Vuelos ordenados por: ${criterio}`);
 }
 
-// Extraer minutos de formato "2 h 15m"
 function extraerMinutos(duracion) {
     const partes = duracion.match(/(\d+)\s*h\s*(\d+)\s*m/);
     if (partes) {

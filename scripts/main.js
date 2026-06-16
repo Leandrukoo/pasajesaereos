@@ -1,12 +1,8 @@
-// Funcionalidades de todo el sitio
-
 document.addEventListener('DOMContentLoaded', function() {
     inicializarNavegacion();
     configurarEventosGlobales();
     actualizarNombreUsuario();
 });
-
-// Nombre del usuario en el header
 
 function actualizarNombreUsuario() {
     const usuario = cargarDatos('usuarioLogueado');
@@ -16,21 +12,14 @@ function actualizarNombreUsuario() {
     }
 }
 
-// Navegacion responsive
-
-/**
- * Inicializa la navegacion responsiva
- */
 function inicializarNavegacion() {
     const navHeader = document.querySelector('.nav_header');
     const ulHeader = document.querySelector('.ul_header');
 
-    // Crear boton hamburguesa si no existe
     if (!document.querySelector('.menu-hamburguesa')) {
         crearBtnHamburguesa();
     }
 
-    // Event para toggle del menú
     const btnMenu = document.querySelector('.menu-hamburguesa');
     if (btnMenu) {
         btnMenu.addEventListener('click', function() {
@@ -38,7 +27,6 @@ function inicializarNavegacion() {
             btnMenu.classList.toggle('activo');
         });
 
-        // Cerrar menu al hacer click en un link
         const links = ulHeader.querySelectorAll('a');
         links.forEach(link => {
             link.addEventListener('click', function() {
@@ -48,7 +36,6 @@ function inicializarNavegacion() {
         });
     }
 
-    // Cerrar menu si se redimensiona la ventana
     window.addEventListener('resize', function() {
         if (window.innerWidth > 768) {
             ulHeader.classList.remove('menu-activo');
@@ -57,9 +44,6 @@ function inicializarNavegacion() {
     });
 }
 
-/**
- * Crea el boton hamburguesa dinámicamente
- */
 function crearBtnHamburguesa() {
     const nav = document.querySelector('.nav_header');
     const btnMenu = document.createElement('button');
@@ -76,11 +60,6 @@ function crearBtnHamburguesa() {
     nav.appendChild(btnMenu);
 }
 
-// Eventos globales
-
-/**
- * Configura eventos globales del sitio
- */
 function configurarEventosGlobales() {
     document.querySelectorAll('a[href^="#"]').forEach(link => {
         link.addEventListener('click', manejarSmoothScroll);
@@ -89,9 +68,6 @@ function configurarEventosGlobales() {
     detectarModoSistema();
 }
 
-/**
- * Smooth scroll para links internos
- */
 function manejarSmoothScroll(e) {
     const href = this.getAttribute('href');
     if (href === '#') {
@@ -107,9 +83,6 @@ function manejarSmoothScroll(e) {
 }
 
 
-/**
- * Detecta y aplica el modo oscuro/claro del sistema
- */
 function detectarModoSistema() {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.setAttribute('data-tema', 'oscuro');
@@ -117,13 +90,10 @@ function detectarModoSistema() {
         document.body.setAttribute('data-tema', 'claro');
     }
 
-    // Listener para cambios de modo
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
         document.body.setAttribute('data-tema', e.matches ? 'oscuro' : 'claro');
     });
 }
-
-// Utilidades de la navegacion
 
 /**
  * Redirige a otra pagina
@@ -140,24 +110,14 @@ function redirigir(url, delay = 0) {
     }
 }
 
-/**
- * Vuelve a la pagina anterior
- */
 function volverAtras() {
     window.history.back();
 }
 
-/**
- * Recarga la pagina
- */
 function recargarPagina() {
     location.reload();
 }
 
-// Estilos responsive
-/**
- * Inyecta estilos CSS para responsive
- */
 function inyectarEstilosResponsivos() {
     const estilo = document.createElement('style');
     estilo.textContent = `
@@ -335,7 +295,6 @@ function inyectarEstilosResponsivos() {
     document.head.appendChild(estilo);
 }
 
-// Ejecutar al cargar
 inyectarEstilosResponsivos();
 
 console.log('✓ Main.js cargado - Funcionalidades globales activas');

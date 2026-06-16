@@ -1,6 +1,6 @@
-// Detalle de vuelo
 const asientosSeleccionados = [];
 let precioTotal = 500;
+let cantidadPasajeros = 1;
 
 document.addEventListener('DOMContentLoaded', function() {
     cargarDetalleVuelo();
@@ -9,8 +9,14 @@ document.addEventListener('DOMContentLoaded', function() {
     configurarBtnContinuar();
 });
 
-// Cargar detalle del vuelo
 function cargarDetalleVuelo() {
+
+    const datosBusqueda = cargarDatos('datosBusquedaVuelos');
+
+    if (datosBusqueda) {
+        cantidadPasajeros = parseInt(datosBusqueda.pasajeros);
+    }
+
     const vueloSeleccionado = cargarDatos('vueloSeleccionado');
 
     if (vueloSeleccionado) {
@@ -32,7 +38,6 @@ function cargarDetalleVuelo() {
             }
         }
 
-        // Actualizar total
         const montoElement = document.querySelector('.monto');
         if (montoElement) {
             montoElement.innerHTML = `
@@ -47,7 +52,6 @@ function cargarDetalleVuelo() {
     }
 }
 
-// Inicializar mapa de asientos
 function inicializarMapaAsientos() {
     const asientosDisponibles = document.querySelectorAll('.asiento.disponible');
 
@@ -61,32 +65,55 @@ function inicializarMapaAsientos() {
     console.log(`✓ Mapa de asientos inicializado (${asientosDisponibles.length} asientos disponibles)`);
 }
 
-// Toggle de seleccion de asiento
 function toggleAsiento(asientoElement) {
+
     const asientoId = asientoElement.getAttribute('data-id');
 
     if (!asientoId) return;
 
-    // Verificar si el asiento ya esta seleccionado
     const yaSeleccionado = asientosSeleccionados.includes(asientoId);
 
     if (yaSeleccionado) {
-        asientosSeleccionados.splice(asientosSeleccionados.indexOf(asientoId), 1);
+
+        asientosSeleccionados.splice(
+            asientosSeleccionados.indexOf(asientoId),
+            1
+        );
+
         asientoElement.classList.remove('seleccionado');
+        asientoElement.classList.add('disponible');
+
     } else {
+
+        if (asientosSeleccionados.length >= cantidadPasajeros) {
+
+            mostrarNotificacion(
+                `Solo puedes seleccionar ${cantidadPasajeros} asiento(s)`,
+                'error'
+            );
+
+            return;
+        }
+
         asientosSeleccionados.push(asientoId);
+
         asientoElement.classList.add('seleccionado');
         asientoElement.classList.remove('disponible');
     }
 
-    // Actualizar UI
     actualizarInfoSeleccion();
-    guardarDatos('asientosSeleccionados', asientosSeleccionados);
 
-    console.log('Asientos seleccionados:', asientosSeleccionados);
+    guardarDatos(
+        'asientosSeleccionados',
+        asientosSeleccionados
+    );
+
+    console.log(
+        'Asientos seleccionados:',
+        asientosSeleccionados
+    );
 }
 
-// Configurar eventos de asientos
 function configurarEventosAsientos() {
     const asientos = document.querySelectorAll('.asiento');
 
@@ -105,7 +132,6 @@ function configurarEventosAsientos() {
     });
 }
 
-// Actualizar informacion de seleccion
 function actualizarInfoSeleccion() {
     const infoElement = document.getElementById('info-seleccion');
     const btnContinuar = document.getElementById('btn-continuar');
@@ -127,7 +153,6 @@ function actualizarInfoSeleccion() {
     }
 }
 
-// Configurar boton continuar
 function configurarBtnContinuar() {
     const btnContinuar = document.getElementById('btn-continuar');
 
@@ -139,27 +164,22 @@ function configurarBtnContinuar() {
             return;
         }
 
-        // Guardar asientos antes de continuar
         guardarDatos('asientosSeleccionados', asientosSeleccionados);
 
         mostrarNotificacion('Asientos guardados. Redirigiendo...', 'exito');
 
-        // Redirigir a checkout
         setTimeout(() => {
             redirigir('checkout.html', 500);
         }, 1000);
     });
 
-    // Desactivar inicialmente
     btnContinuar.disabled = true;
     btnContinuar.style.opacity = '0.5';
 
-    // Cambiar estilos
     btnContinuar.style.cursor = 'pointer';
     btnContinuar.style.transition = '0.3s';
 }
 
-// Limpiar selección de asientos
 function limpiarSeleccion() {
     asientosSeleccionados.length = 0;
 
@@ -173,7 +193,6 @@ function limpiarSeleccion() {
     console.log('✓ Selección de asientos limpiada');
 }
 
-// Seleccionar asientos aleatorios
 function seleccionarAleatorios(cantidad = 2) {
     limpiarSeleccion();
 
@@ -192,7 +211,6 @@ function seleccionarAleatorios(cantidad = 2) {
     console.log(`✓ ${cantidad} asientos seleccionados aleatoriamente`);
 }
 
-// Estilos dinamicos
 function agregarEstilosAsientos() {
     const estilo = document.createElement('style');
     estilo.textContent = `
@@ -252,7 +270,6 @@ function agregarEstilosAsientos() {
     document.head.appendChild(estilo);
 }
 
-// Inyectar estilos
 agregarEstilosAsientos();
 
 console.log('✓ DetalleVuelo.js cargado - Selección de asientos activa');

@@ -1,15 +1,11 @@
-// Form de contacto
-
 document.addEventListener('DOMContentLoaded', function() {
     inicializarFormularioContacto();
     configurarEventosContacto();
 });
 
-// Inicializar formulario de contacto
 function inicializarFormularioContacto() {
     console.log('✓ Contacto.js cargado');
 
-    // Restaurar datos si existen
     const datosGuardados = cargarDatos('formularioContacto');
     if (datosGuardados) {
         document.getElementById('nombre').value = datosGuardados.nombre || '';
@@ -19,7 +15,6 @@ function inicializarFormularioContacto() {
     }
 }
 
-// Configurar eventos del formulario
 function configurarEventosContacto() {
     const form = document.querySelector('form');
     const inputNombre = document.getElementById('nombre');
@@ -29,21 +24,17 @@ function configurarEventosContacto() {
     const btnEnviar = form.querySelector('button[type="submit"]');
     const btnCancelar = form.querySelector('button[type="reset"]');
 
-    // Validacion en tiempo real
     inputNombre.addEventListener('blur', validarNombreContacto);
     inputEmail.addEventListener('blur', validarEmailContacto);
     inputTelefono.addEventListener('blur', validarTelefonoContacto);
     textareaMensaje.addEventListener('blur', validarMensajeContacto);
 
-    // Guardar datos mientras se escriben
     [inputNombre, inputEmail, inputTelefono, textareaMensaje].forEach(input => {
         input.addEventListener('input', guardarDatosFormularioContacto);
     });
 
-    // Envio del formulario
     form.addEventListener('submit', manejarEnvioContacto);
 
-    // Reset del formulario
     btnCancelar.addEventListener('click', function(e) {
         e.preventDefault();
         if (confirm('¿Seguro que deseas limpiar el formulario?')) {
@@ -54,7 +45,6 @@ function configurarEventosContacto() {
     });
 }
 
-// Validar nombre
 function validarNombreContacto() {
     const nombre = document.getElementById('nombre');
     const valor = nombre.value.trim();
@@ -74,7 +64,6 @@ function validarNombreContacto() {
     return true;
 }
 
-// Validar email
 function validarEmailContacto() {
     const email = document.getElementById('email');
     const valor = email.value.trim();
@@ -94,7 +83,6 @@ function validarEmailContacto() {
     return true;
 }
 
-// Validar telefono
 function validarTelefonoContacto() {
     const telefono = document.getElementById('telefono');
     const valor = telefono.value.trim();
@@ -114,7 +102,6 @@ function validarTelefonoContacto() {
     return true;
 }
 
-// Validar mensaje
 function validarMensajeContacto() {
     const mensaje = document.getElementById('mensaje');
     const valor = mensaje.value.trim();
@@ -134,7 +121,6 @@ function validarMensajeContacto() {
     return true;
 }
 
-// Aplicar estilo de validacion
 function aplicarEstiloValidacion(elemento, esValido) {
     if (esValido === true) {
         elemento.style.borderColor = '#4CAF50';
@@ -148,7 +134,6 @@ function aplicarEstiloValidacion(elemento, esValido) {
     }
 }
 
-// Guardar datos del formulario
 function guardarDatosFormularioContacto() {
     const datosFormulario = {
         nombre: document.getElementById('nombre').value,
@@ -161,11 +146,9 @@ function guardarDatosFormularioContacto() {
     guardarDatos('formularioContacto', datosFormulario);
 }
 
-// Manejar envio del formulario
 function manejarEnvioContacto(event) {
     event.preventDefault();
 
-    // Validar todos los campos
     const esNombreValido = validarNombreContacto();
     const esEmailValido = validarEmailContacto();
     const esTelefonoValido = validarTelefonoContacto();
@@ -176,7 +159,6 @@ function manejarEnvioContacto(event) {
         return;
     }
 
-    // Crear objeto con los datos del mensaje
     const datosContacto = {
         nombre: document.getElementById('nombre').value,
         email: document.getElementById('email').value,
@@ -186,36 +168,27 @@ function manejarEnvioContacto(event) {
         id: Date.now() 
     };
 
-    // Guardar mensaje
     guardarMensajeContacto(datosContacto);
 
-    // Mostrar confirmación
     mostrarConfirmacionEnvio(datosContacto);
 
-    // Limpiar formulario
     event.target.reset();
 
-    // Limpiar datos guardados
     limpiarDatos('formularioContacto');
 
     console.log('✓ Mensaje enviado:', datosContacto);
 }
 
-// Guardar mensaje en lista de contactos
 function guardarMensajeContacto(datos) {
-    // Obtener mensajes anteriores
     let mensajes = cargarDatos('mensajesContacto') || [];
 
-    // Agregar nuevo mensaje
     mensajes.push(datos);
 
-    // Guardar lista actualizada
     guardarDatos('mensajesContacto', mensajes);
 
     console.log(`✓ Mensaje #${datos.id} guardado en mensajesContacto`);
 }
 
-// Mostrar confirmacion de envio
 function mostrarConfirmacionEnvio(datos) {
     const confirmacion = document.createElement('div');
     confirmacion.className = 'confirmacion-envio';
@@ -242,7 +215,6 @@ function mostrarConfirmacionEnvio(datos) {
     const formulario = main.querySelector('form');
     main.insertBefore(confirmacion, formulario);
 
-    // Auto-remover despues de 5 segundos
     setTimeout(() => {
         confirmacion.style.animation = 'fadeOut 0.5s ease-in-out';
         setTimeout(() => confirmacion.remove(), 500);
@@ -251,7 +223,6 @@ function mostrarConfirmacionEnvio(datos) {
     mostrarNotificacion('Mensaje enviado correctamente', 'exito');
 }
 
-// Estilos dinamicos
 function agregarEstilosContacto() {
     const estilo = document.createElement('style');
     estilo.textContent = `
@@ -295,7 +266,6 @@ function agregarEstilosContacto() {
     document.head.appendChild(estilo);
 }
 
-// Inyectar estilos
 agregarEstilosContacto();
 
 

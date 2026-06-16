@@ -1,4 +1,3 @@
-// Datos de perfil 
 const perfilPorDefecto = {
     nombre: 'Juan Pérez',
     dni: '12345678',
@@ -14,19 +13,15 @@ document.addEventListener('DOMContentLoaded', function() {
     configurarEventosReservas();
 });
 
-// Cargar mis reservas
 function cargarMisReservas() {
     console.log('✓ Reservas.js cargado');
 
-    // Obtener datos de checkout (reserva actual)
     const datosCheckout = cargarDatos('datosCheckout');
     const vueloSeleccionado = cargarDatos('vueloSeleccionado');
     const asientosSeleccionados = cargarDatos('asientosSeleccionados');
 
-    // Obtener historial de reservas
     let reservas = cargarDatos('misReservas') || [];
 
-    // Si hay una nueva reserva, agregarla
     if (datosCheckout && vueloSeleccionado) {
         const nuevaReserva = {
             id: Date.now(),
@@ -49,12 +44,10 @@ function cargarMisReservas() {
             estado: 'Confirmada'
         };
 
-        // Verificar que no sea duplicada
         if (!reservas.find(r => r.id === nuevaReserva.id)) {
             reservas.unshift(nuevaReserva);
             guardarDatos('misReservas', reservas);
 
-            // Limpiar datos de compra
             limpiarDatos('datosCheckout');
             limpiarDatos('vueloSeleccionado');
             limpiarDatos('asientosSeleccionados');
@@ -64,10 +57,7 @@ function cargarMisReservas() {
         }
     }
 
-    // Mostrar reservas
     mostrarReservas(reservas);
-
-    // Actualizar nombre del perfil con el usuario logueado
     const usuarioLogueado = cargarDatos('usuarioLogueado');
     const nombreMostrar = usuarioLogueado?.nombre || (reservas.length > 0 ? reservas[0].nombre : null);
     if (nombreMostrar) {
@@ -79,13 +69,11 @@ function cargarMisReservas() {
     }
 }
 
-// Mostrar reservas 
 function mostrarReservas(reservas) {
     const misReservasSection = document.querySelector('.mis-reservas');
 
     if (!misReservasSection) return;
 
-    // Limpiar contenido anterior
     misReservasSection.innerHTML = '';
 
     if (reservas.length === 0) {
@@ -98,7 +86,6 @@ function mostrarReservas(reservas) {
         return;
     }
 
-    // Crear accordion para cada reserva
     reservas.forEach((reserva, index) => {
         const checkboxId = `reserva${index}`;
         const estado = reserva.estado === 'Confirmada' ? '✓' : '⚠';
@@ -157,29 +144,25 @@ function mostrarReservas(reservas) {
         misReservasSection.appendChild(contenido);
     });
 
-    // Agregar estilos para botones
     agregarEstilosReservas();
 
     console.log(`✓ ${reservas.length} reserva(s) mostrada(s)`);
 }
 
-// Configurar eventos de reservas
 function configurarEventosReservas() {
     console.log('✓ Eventos de reservas configurados');
 }
 
-// Descargar reserva (PDF simulado)
 function descargarReserva(index) {
     const reservas = cargarDatos('misReservas') || [];
     const reserva = reservas[index];
 
     if (!reserva) return;
 
-    // Crear contenido del documento
     const contenido = `
 ╔════════════════════════════════════════════╗
 ║         COMPROBANTE DE RESERVA             ║
-║          PasajesAereos.com                  ║
+║          PasajesAereos.com                 ║
 ╚════════════════════════════════════════════╝
 
 NÚMERO DE RESERVA: ${reserva.numero}
@@ -222,7 +205,6 @@ reservas@pasajesaereos.com
 ════════════════════════════════════════════
     `;
 
-    // Descargar como archivo de texto
     const elemento = document.createElement('a');
     elemento.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(contenido));
     elemento.setAttribute('download', `reserva_${reserva.numero}.txt`);
@@ -236,7 +218,6 @@ reservas@pasajesaereos.com
     console.log('✓ Reserva descargada:', reserva.numero);
 }
 
-// Cancelar reserva
 function cancelarReserva(index) {
     if (!confirm('¿Estás seguro que deseas cancelar esta reserva? Esta acción no se puede deshacer.')) {
         return;
@@ -245,14 +226,11 @@ function cancelarReserva(index) {
     const reservas = cargarDatos('misReservas') || [];
     const reservaACancelar = reservas[index];
 
-    // Cambiar estado a cancelada
     reservaACancelar.estado = 'Cancelada';
     reservas[index] = reservaACancelar;
 
-    // Guardar cambios
     guardarDatos('misReservas', reservas);
 
-    // Recargar página
     mostrarNotificacion('Reserva cancelada. Se procesará un reembolso en 5-7 días hábiles', 'info');
 
     setTimeout(() => {
@@ -262,7 +240,6 @@ function cancelarReserva(index) {
     console.log('✓ Reserva cancelada:', reservaACancelar.numero);
 }
 
-// Agregar estilos
 function agregarEstilosReservas() {
     const estilo = document.createElement('style');
     estilo.textContent = `

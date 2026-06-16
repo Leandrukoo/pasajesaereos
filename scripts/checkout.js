@@ -1,6 +1,3 @@
-// Form de pago
-
-// Cupones validos
 const cuponesValidos = {
     'DESCUENTO10': { descuento: 0.10, descripcion: '10% de descuento' },
     'DESCUENTO20': { descuento: 0.20, descripcion: '20% de descuento' },
@@ -18,13 +15,11 @@ document.addEventListener('DOMContentLoaded', function() {
     configurarEventosCheckout();
 });
 
-// Inicializar checkout
 function inicializarCheckout() {
     console.log('✓ Checkout.js cargado');
     mostrarResumenPorDefecto();
 }
 
-// Cargar resumen del vuelo
 function cargarResumenVuelo() {
     const vueloSeleccionado = cargarDatos('vueloSeleccionado');
     const datosBusqueda = cargarDatos('datosBusquedaVuelos');
@@ -54,7 +49,6 @@ function cargarResumenVuelo() {
     }
 }
 
-// Mostrar resumen por defecto
 function mostrarResumenPorDefecto() {
     const resumenElement = document.querySelector('.resumen_vuelo');
     if (!resumenElement.querySelector('h3')) {
@@ -62,7 +56,6 @@ function mostrarResumenPorDefecto() {
     }
 }
 
-// Aplicar cupon descuento
 function aplicarCupon() {
     const inputCupon = document.getElementById('cupon');
     const cuponIngresado = inputCupon.value.toUpperCase().trim();
@@ -77,7 +70,6 @@ function aplicarCupon() {
         descuentoActual = cupon.descuento;
         precioConDescuento = precioOriginal * (1 - descuentoActual);
 
-        // Actualizar UI
         const descuentoInfo = document.getElementById('descuentoInfo');
         const totalPrecio = document.getElementById('totalPrecio');
 
@@ -93,7 +85,6 @@ function aplicarCupon() {
         inputCupon.disabled = true;
         document.getElementById('btnAplicarCupon').disabled = true;
 
-        // Guardar cupon aplicado
         guardarDatos('cuponAplicado', {
             codigo: cuponIngresado,
             descuento: descuentoActual,
@@ -108,7 +99,6 @@ function aplicarCupon() {
     }
 }
 
-// Configurar eventos del formulario
 function configurarEventosCheckout() {
     const form = document.querySelector('.contenido');
     const radioPago = document.querySelectorAll('input[name="tipo"]');
@@ -117,22 +107,18 @@ function configurarEventosCheckout() {
     const inputEmail = document.getElementById('email');
     const inputTelefono = document.getElementById('telefono');
 
-    // Event para validacion en tiempo real
     inputNombre.addEventListener('blur', validarNombre);
     inputDNI.addEventListener('blur', validarDNI);
     inputEmail.addEventListener('blur', validarEmail_checkout);
     inputTelefono.addEventListener('blur', validarTelefono_checkout);
 
-    // Event para cambio de metodo de pago
     radioPago.forEach(radio => {
         radio.addEventListener('change', manejarCambioMetodoPago);
     });
 
-    // Event para el formulario
     form.addEventListener('submit', manejarEnvioCheckout);
 }
 
-// Validar nombre
 function validarNombre() {
     const nombre = document.getElementById('nombre');
     const valor = nombre.value.trim();
@@ -152,7 +138,6 @@ function validarNombre() {
     return true;
 }
 
-// Validar DNI
 function validarDNI() {
     const dni = document.getElementById('dni');
     const valor = dni.value.trim();
@@ -173,7 +158,6 @@ function validarDNI() {
     return true;
 }
 
-// Validar email
 function validarEmail_checkout() {
     const email = document.getElementById('email');
     const valor = email.value.trim();
@@ -193,7 +177,6 @@ function validarEmail_checkout() {
     return true;
 }
 
-// Validar telefono
 function validarTelefono_checkout() {
     const telefono = document.getElementById('telefono');
     const valor = telefono.value.trim();
@@ -213,23 +196,58 @@ function validarTelefono_checkout() {
     return true;
 }
 
-// Manejar cambio de metodo de pago
 function manejarCambioMetodoPago(event) {
+
     const metodoPago = event.target.value;
+    const datosTarjeta = document.getElementById('datosTarjeta');
+
+    if (
+        metodoPago === 'tarjeta' ||
+        metodoPago === 'debito'
+    ) {
+        datosTarjeta.style.display = 'block';
+    } else {
+        datosTarjeta.style.display = 'none';
+    }
+
     console.log(`Método de pago seleccionado: ${metodoPago}`);
-    // Aquí podrías mostrar/ocultar campos específicos según el método
 }
 
-// Manejar envio del formulario
 function manejarEnvioCheckout(event) {
     event.preventDefault();
 
-    // Validar todos los campos
     const esNombreValido = validarNombre();
     const esDNIValido = validarDNI();
     const esEmailValido = validarEmail_checkout();
     const esTelefonoValido = validarTelefono_checkout();
     const metodoPagoSeleccionado = document.querySelector('input[name="tipo"]:checked');
+
+    if (
+    metodoPagoSeleccionado &&
+    (
+        metodoPagoSeleccionado.value === 'tarjeta' ||
+        metodoPagoSeleccionado.value === 'debito'
+    )
+) {
+
+    const numeroTarjeta = document.getElementById('numeroTarjeta').value.trim();
+    const titular = document.getElementById('titularTarjeta').value.trim();
+    const vencimiento = document.getElementById('vencimientoTarjeta').value;
+    const cvv = document.getElementById('cvvTarjeta').value.trim();
+
+    if (
+        numeroTarjeta === '' ||
+        titular === '' ||
+        vencimiento === '' ||
+        cvv === ''
+    ) {
+        mostrarNotificacion(
+            'Completa todos los datos de la tarjeta',
+            'error'
+        );
+        return;
+    }
+}
 
     if (!esNombreValido || !esDNIValido || !esEmailValido || !esTelefonoValido) {
         mostrarNotificacion('Por favor completa todos los campos correctamente', 'error');
@@ -241,7 +259,6 @@ function manejarEnvioCheckout(event) {
         return;
     }
 
-    // Obtener datos del formulario
     const datosCheckout = {
         nombre: document.getElementById('nombre').value,
         tipoDni: document.getElementById('tipoDni').value,
@@ -255,7 +272,6 @@ function manejarEnvioCheckout(event) {
         fecha: new Date().toISOString()
     };
 
-    // Guardar datos
     guardarDatos('datosCheckout', datosCheckout);
 
     mostrarNotificacion('Pago procesado. Redirigiendo a tus reservas...', 'exito');

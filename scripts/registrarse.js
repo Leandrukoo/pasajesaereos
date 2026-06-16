@@ -1,5 +1,3 @@
-// Form de registro
-
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('.formulario');
     if (!form) return;
