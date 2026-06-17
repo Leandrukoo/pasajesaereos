@@ -211,9 +211,8 @@ function mostrarConfirmacionEnvio(datos) {
         </div>
     `;
 
-    const main = document.querySelector('main');
-    const formulario = main.querySelector('form');
-    main.insertBefore(confirmacion, formulario);
+    const formulario = document.querySelector('main form');
+    formulario.parentNode.insertBefore(confirmacion, formulario);
 
     setTimeout(() => {
         confirmacion.style.animation = 'fadeOut 0.5s ease-in-out';
