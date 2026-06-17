@@ -1,4 +1,15 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+main {
   width: min(95%, 80rem);
   margin: 0 auto;
   margin-top: 8rem;

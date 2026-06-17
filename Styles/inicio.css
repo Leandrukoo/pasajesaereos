@@ -10,6 +10,7 @@ select {
     justify-content: space-between;
     gap: 1.25rem;
     margin-bottom: 1.25rem;
+    width: 100%;
 }
 
 .titulo-principal {
@@ -127,6 +128,7 @@ select {
     border: 0.0625rem solid rgba(255, 255, 255, 0.3);
     width: 100%;
     box-sizing: border-box;
+    min-width: 0;
 }
 
 
@@ -295,6 +297,7 @@ textarea {
         border-left: none;
         border-right: none;
         margin: 0.5rem 0;
+        box-sizing: border-box;
     }
 
     .titulo-principal h2 {
