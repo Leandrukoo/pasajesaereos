@@ -12,20 +12,177 @@ const vuelosMock = [
 ];
 
 document.addEventListener('DOMContentLoaded', function() {
-    inicializarVuelos();
-    mostrarDatosBusqueda();
-    configurarFiltros();
+    const ofertaAplicada = cargarDatos('ofertaAplicada');
+
+    if (ofertaAplicada) {
+        renderizarVueloDeOferta(ofertaAplicada);
+        limpiarDatos('ofertaAplicada');
+    } else {
+        const huboBusqueda = !!cargarDatos('datosBusquedaVuelos');
+
+        console.log('✓ Vuelos.js cargado');
+        renderizarVuelos();
+        configurarFiltros();
+
+        if (huboBusqueda) {
+            aplicarFiltros();
+            mostrarDatosBusqueda();
+        } else {
+            agregarFiltrosBusqueda('Buenos Aires', 'Madrid');
+        }
+    }
 });
 
-function inicializarVuelos() {
-    console.log('✓ Vuelos.js cargado');
-    renderizarVuelos();
-    aplicarFiltros();
+function renderizarVueloDeOferta(oferta) {
+    const contenedor = document.querySelector('.aerolineas');
+    if (!contenedor) return;
+
+    const horaSalida = '10:00';
+    const horaLlegada = '18:00';
+
+    const vueloOferta = {
+        id: `oferta-${oferta.id}`,
+        origen: oferta.origen,
+        destino: oferta.destino,
+        horaSalida,
+        horaLlegada,
+        tipo: 'Directo',
+        duracion: calcularDuracion(horaSalida, horaLlegada),
+        precio: oferta.precioOferta,
+        aerolinea: 'aerolinea1',
+        equipaje: true
+    };
+
+    contenedor.innerHTML = '';
+
+    const article = document.createElement('article');
+    article.className = 'aereolinea';
+    article.innerHTML = `
+        <img class="aerolinea_img" src="../Imagenes/fondo-transparente.png" alt="${vueloOferta.aerolinea}">
+        <section class="aerolinea_horario">
+            <h3>${vueloOferta.origen}</h3>
+            <p>${vueloOferta.horaSalida}</p>
+        </section>
+        <section class="aerolinea_horario">
+            <h3>${vueloOferta.destino}</h3>
+            <p>${vueloOferta.horaLlegada}</p>
+        </section>
+        <h4 class="aerolinea_content">${vueloOferta.tipo}</h4>
+        <p class="aerolinea_content">${vueloOferta.duracion}</p>
+        <p class="aerolinea_content">$${vueloOferta.precio}</p>
+        <a href="#" class="boton_reservar">Reservar</a>
+    `;
+
+    article.querySelector('.boton_reservar').addEventListener('click', function(e) {
+        e.preventDefault();
+        confirmarSeleccionVuelo(vueloOferta);
+    });
+
+    contenedor.appendChild(article);
+
+    const [nombreOrigen, nombreDestino] = oferta.rutaCompleta.split(' → ');
+    agregarFiltrosBusqueda(nombreOrigen, nombreDestino);
+    mostrarDatosBusqueda();
+    actualizarContadorResultados(1);
+
+    console.log('✓ Vuelo de oferta mostrado:', vueloOferta);
+}
+
+function agregarFiltrosBusqueda(nombreOrigen, nombreDestino) {
+    const filtro = document.querySelector('.filtro');
+    if (!filtro || document.getElementById('oferta-fecha-ida')) return;
+
+    filtro.insertAdjacentHTML('afterbegin', `
+        <div class="subtitulo">
+            <h2>Tipo de viaje</h2>
+        </div>
+        <section class="filtrado_tipo_vuelo">
+            <input type="radio" id="oferta-ida-vuelta" name="oferta-tipo" value="ida-vuelta" checked>
+            <label for="oferta-ida-vuelta">Ida y vuelta</label><br>
+            <input type="radio" id="oferta-solo-ida" name="oferta-tipo" value="solo-ida">
+            <label for="oferta-solo-ida">Solo ida</label><br>
+        </section>
+        <div class="subtitulo">
+            <h2>Fechas</h2>
+        </div>
+        <section class="filtrado_por filtro-extra">
+            <label for="oferta-fecha-ida">Ida</label>
+            <input type="date" id="oferta-fecha-ida">
+            <label for="oferta-fecha-vuelta">Vuelta</label>
+            <input type="date" id="oferta-fecha-vuelta">
+        </section>
+        <div class="subtitulo">
+            <h2>Pasajeros</h2>
+        </div>
+        <section class="filtrado_por filtro-extra">
+            <select id="oferta-pasajeros">
+                <option value="1">1 Pasajero</option>
+                <option value="2">2 Pasajeros</option>
+                <option value="3">3 Pasajeros</option>
+            </select>
+        </section>
+        <div class="subtitulo">
+            <h2>Clase</h2>
+        </div>
+        <section class="filtrado_por filtro-extra">
+            <select id="oferta-clase">
+                <option value="economica">Económica</option>
+                <option value="ejecutiva">Ejecutiva</option>
+                <option value="primera">Primera Clase</option>
+            </select>
+        </section>
+    `);
+
+    const inputFechaIda = document.getElementById('oferta-fecha-ida');
+    const inputFechaVuelta = document.getElementById('oferta-fecha-vuelta');
+    const selectPasajeros = document.getElementById('oferta-pasajeros');
+    const selectClase = document.getElementById('oferta-clase');
+    inputFechaIda.value = formatearFechaISO(sumarDias(new Date(), 7));
+    inputFechaVuelta.value = formatearFechaISO(sumarDias(new Date(), 14));
+
+    function guardarBusquedaOferta() {
+        const tipoSeleccionado = document.querySelector('input[name="oferta-tipo"]:checked').value;
+        guardarDatos('datosBusquedaVuelos', {
+            tipo: tipoSeleccionado,
+            origen: nombreOrigen,
+            destino: nombreDestino,
+            fechaIda: inputFechaIda.value,
+            fechaVuelta: tipoSeleccionado === 'solo-ida' ? '' : inputFechaVuelta.value,
+            pasajeros: selectPasajeros.value,
+            clase: selectClase.value
+        });
+    }
+
+    document.querySelectorAll('input[name="oferta-tipo"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            inputFechaVuelta.disabled = this.value === 'solo-ida';
+            guardarBusquedaOferta();
+        });
+    });
+
+    inputFechaIda.addEventListener('change', guardarBusquedaOferta);
+    inputFechaVuelta.addEventListener('change', guardarBusquedaOferta);
+    selectPasajeros.addEventListener('change', guardarBusquedaOferta);
+    selectClase.addEventListener('change', guardarBusquedaOferta);
+
+    guardarBusquedaOferta();
+}
+
+function sumarDias(fecha, dias) {
+    return new Date(fecha.getTime() + dias * 24 * 60 * 60 * 1000);
+}
+
+function formatearFechaISO(fecha) {
+    return fecha.toISOString().split('T')[0];
 }
 
 function renderizarVuelos() {
     const contenedor = document.querySelector('.aerolineas');
     if (!contenedor) return;
+
+    const datosBusqueda = cargarDatos('datosBusquedaVuelos');
+    const codigoOrigen = datosBusqueda ? obtenerCodigoCiudad(datosBusqueda.origen) : null;
+    const codigoDestino = datosBusqueda ? obtenerCodigoCiudad(datosBusqueda.destino) : null;
 
     contenedor.innerHTML = '';
 
@@ -35,11 +192,11 @@ function renderizarVuelos() {
         article.innerHTML = `
             <img class="aerolinea_img" src="../Imagenes/fondo-transparente.png" alt="${vuelo.aerolinea}">
             <section class="aerolinea_horario">
-                <h3>${vuelo.origen}</h3>
+                <h3>${codigoOrigen || vuelo.origen}</h3>
                 <p>${vuelo.horaSalida}</p>
             </section>
             <section class="aerolinea_horario">
-                <h3>${vuelo.destino}</h3>
+                <h3>${codigoDestino || vuelo.destino}</h3>
                 <p>${vuelo.horaLlegada}</p>
             </section>
             <h4 class="aerolinea_content">${vuelo.tipo}</h4>
@@ -185,10 +342,19 @@ function actualizarContadorResultados(cantidad) {
 function guardarVueloSeleccionado(vueloId) {
     const vuelo = vuelosMock.find(v => v.id === vueloId);
     if (vuelo) {
-        guardarDatos('vueloSeleccionado', vuelo);
-        mostrarNotificacion('Vuelo guardado. Redirigiendo...', 'exito');
-        setTimeout(() => { window.location.href = 'detalleVuelo.html'; }, 500);
+        const datosBusqueda = cargarDatos('datosBusquedaVuelos');
+        const vueloAGuardar = datosBusqueda
+            ? { ...vuelo, origen: obtenerCodigoCiudad(datosBusqueda.origen), destino: obtenerCodigoCiudad(datosBusqueda.destino) }
+            : vuelo;
+
+        confirmarSeleccionVuelo(vueloAGuardar);
     }
+}
+
+function confirmarSeleccionVuelo(vuelo) {
+    guardarDatos('vueloSeleccionado', vuelo);
+    mostrarNotificacion('Vuelo guardado. Redirigiendo...', 'exito');
+    setTimeout(() => { window.location.href = 'detalleVuelo.html'; }, 500);
 }
 
 function ordenarVuelos(criterio) {

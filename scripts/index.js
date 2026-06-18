@@ -11,7 +11,7 @@ function manejarLogin(event) {
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
 
-    const usuarioRegistrado = cargarDatos('usuarioRegistrado');
+    const usuariosRegistrados = cargarDatos('usuariosRegistrados') || [];
     const usuarioPorDefecto = {
         nombre: 'Juan Perez',
         email: 'test@test.com',
@@ -21,8 +21,12 @@ function manejarLogin(event) {
         pais: 'Argentina'
     };
 
+    const usuarioRegistrado = usuariosRegistrados.find(
+        u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
+    );
+
     let usuarioValido = null;
-    if (usuarioRegistrado && email === usuarioRegistrado.email && password === usuarioRegistrado.password) {
+    if (usuarioRegistrado) {
         usuarioValido = usuarioRegistrado;
     } else if (email === usuarioPorDefecto.email && password === usuarioPorDefecto.password) {
         usuarioValido = usuarioPorDefecto;

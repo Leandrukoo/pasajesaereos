@@ -62,7 +62,7 @@ header {
 .link-perfil {
     text-decoration: none;
     color: white;
-    font-size: 1rem;
+    font-size: 16px;
 }
 
 .ul_header {
@@ -224,10 +224,6 @@ p {
 
     .img_header {
         height: 2rem;
-    }
-
-    .link-perfil {
-        font-size: 0.9rem;
     }
 
     footer {

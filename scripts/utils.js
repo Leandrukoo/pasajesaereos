@@ -1,4 +1,27 @@
 /**
+ * Ciudades disponibles para buscar vuelos (origen/destino)
+ */
+const ciudadesDisponibles = [
+    { nombre: 'Buenos Aires', codigo: 'BUE' },
+    { nombre: 'Madrid', codigo: 'MAD' },
+    { nombre: 'Miami', codigo: 'MIA' },
+    { nombre: 'Ciudad de México', codigo: 'MEX' },
+    { nombre: 'Nueva York', codigo: 'NYC' },
+    { nombre: 'Roma', codigo: 'FCO' },
+    { nombre: 'París', codigo: 'CDG' }
+];
+
+/**
+ * Obtiene el código de aeropuerto de una ciudad por su nombre
+ * @param {string} nombreCiudad - Nombre de la ciudad
+ * @returns {string} Código de aeropuerto, o el mismo nombre si no se encuentra
+ */
+function obtenerCodigoCiudad(nombreCiudad) {
+    const ciudad = ciudadesDisponibles.find(c => c.nombre === nombreCiudad);
+    return ciudad ? ciudad.codigo : nombreCiudad;
+}
+
+/**
  * Guarda datos en localStorage de forma segura
  * @param {string} clave - Identificador del dato
  * @param {*} datos - Dato a guardar (se convierte a JSON)
@@ -100,6 +123,27 @@ function validarRangoFechas(fechaIda, fechaVuelta) {
     const ida = new Date(fechaIda);
     const vuelta = new Date(fechaVuelta);
     return vuelta >= ida;
+}
+
+/**
+ * Calcula la duración entre dos horarios en formato HH:MM
+ * @param {string} horaSalida - Hora de salida (HH:MM)
+ * @param {string} horaLlegada - Hora de llegada (HH:MM)
+ * @returns {string} Duración formateada, ej "2 h 15m"
+ */
+function calcularDuracion(horaSalida, horaLlegada) {
+    const [horaS, minS] = horaSalida.split(':').map(Number);
+    const [horaL, minL] = horaLlegada.split(':').map(Number);
+
+    let minutosTotales = (horaL * 60 + minL) - (horaS * 60 + minS);
+    if (minutosTotales < 0) {
+        minutosTotales += 24 * 60;
+    }
+
+    const horas = Math.floor(minutosTotales / 60);
+    const minutos = minutosTotales % 60;
+
+    return minutos > 0 ? `${horas} h ${minutos}m` : `${horas} h`;
 }
 
 /**

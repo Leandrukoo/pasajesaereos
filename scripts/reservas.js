@@ -36,6 +36,7 @@ function cargarMisReservas() {
             duracion: vueloSeleccionado.duracion,
             tipo: vueloSeleccionado.tipo,
             asientos: asientosSeleccionados || [],
+            cantidadPasajeros: datosCheckout.pasajeros ? datosCheckout.pasajeros.length : 1,
             precioFinal: datosCheckout.precioFinal,
             precioOriginal: datosCheckout.precioOriginal,
             descuentoAplicado: datosCheckout.descuentoAplicado,
@@ -57,9 +58,13 @@ function cargarMisReservas() {
         }
     }
 
-    mostrarReservas(reservas);
     const usuarioLogueado = cargarDatos('usuarioLogueado');
-    const nombreMostrar = usuarioLogueado?.nombre || (reservas.length > 0 ? reservas[0].nombre : null);
+    const reservasDelUsuario = usuarioLogueado
+        ? reservas.filter(r => r.email.toLowerCase() === usuarioLogueado.email.toLowerCase())
+        : reservas;
+
+    mostrarReservas(reservasDelUsuario);
+    const nombreMostrar = usuarioLogueado?.nombre || (reservasDelUsuario.length > 0 ? reservasDelUsuario[0].nombre : null);
     if (nombreMostrar) {
         const nombreSidebar = document.querySelector('.sidebar-perfil h3');
         if (nombreSidebar) nombreSidebar.textContent = nombreMostrar;
@@ -118,7 +123,7 @@ function mostrarReservas(reservas) {
                 <div>
                     <p><strong>Pasajero:</strong> ${reserva.nombre}</p>
                     <p><strong>Email:</strong> ${reserva.email}</p>
-                    <p><strong>Teléfono:</strong> ${reserva.telefono}</p>
+                    ${reserva.telefono ? `<p><strong>Teléfono:</strong> ${reserva.telefono}</p>` : ''}
                 </div>
                 <div>
                     <p><strong>Ida:</strong> ${reserva.horaSalida} → ${reserva.horaLlegada}</p>
@@ -128,14 +133,21 @@ function mostrarReservas(reservas) {
             </div>
 
             <div class="reserva-pago-info">
+                <p><strong>Cantidad de pasajeros:</strong> ${reserva.cantidadPasajeros || 1}</p>
                 <p><strong>Asientos:</strong> ${reserva.asientos?.join(', ') || 'No especificados'}</p>
-                <p><strong>Método de pago:</strong> ${reserva.metodoPago === 'ida-vuelta' ? 'Tarjeta de crédito' : 'Transferencia bancaria'}</p>
+                <p>
+                    <strong>Método de pago:</strong>
+                    <select onchange="cambiarMetodoPago(${reserva.id}, this.value)">
+                        <option value="tarjeta" ${reserva.metodoPago === 'tarjeta' ? 'selected' : ''}>Tarjeta de crédito</option>
+                        <option value="debito" ${reserva.metodoPago === 'debito' ? 'selected' : ''}>Tarjeta de débito</option>
+                    </select>
+                </p>
                 ${reserva.descuentoAplicado > 0 ? `<p class="reserva-descuento"><strong>Descuento aplicado:</strong> ${(reserva.descuentoAplicado * 100)}%</p>` : ''}
             </div>
 
             <div class="botones-reserva">
-                <button onclick="descargarReserva(${index})">Descargar</button>
-                <button onclick="cancelarReserva(${index})">Cancelar</button>
+                <button onclick="descargarReserva(${reserva.id})">Descargar</button>
+                <button onclick="cancelarReserva(${reserva.id})">Cancelar</button>
             </div>
         `;
 
@@ -153,9 +165,25 @@ function configurarEventosReservas() {
     console.log('✓ Eventos de reservas configurados');
 }
 
-function descargarReserva(index) {
+function etiquetaMetodoPago(metodo) {
+    const etiquetas = { tarjeta: 'Tarjeta de crédito', debito: 'Tarjeta de débito' };
+    return etiquetas[metodo] || metodo;
+}
+
+function cambiarMetodoPago(id, nuevoMetodo) {
     const reservas = cargarDatos('misReservas') || [];
-    const reserva = reservas[index];
+    const reserva = reservas.find(r => r.id === id);
+    if (!reserva) return;
+
+    reserva.metodoPago = nuevoMetodo;
+    guardarDatos('misReservas', reservas);
+
+    mostrarNotificacion('Método de pago actualizado', 'exito');
+}
+
+function descargarReserva(id) {
+    const reservas = cargarDatos('misReservas') || [];
+    const reserva = reservas.find(r => r.id === id);
 
     if (!reserva) return;
 
@@ -173,8 +201,8 @@ FECHA: ${new Date(reserva.fechaReserva).toLocaleDateString('es-AR')}
 DATOS DEL PASAJERO
 ────────────────────────────────────────────
 Nombre: ${reserva.nombre}
-Email: ${reserva.email}
-Teléfono: ${reserva.telefono}
+Email: ${reserva.email}${reserva.telefono ? `
+Teléfono: ${reserva.telefono}` : ''}
 
 ────────────────────────────────────────────
 DETALLES DEL VUELO
@@ -188,6 +216,7 @@ Tipo: ${reserva.tipo}
 ────────────────────────────────────────────
 ASIENTOS RESERVADOS
 ────────────────────────────────────────────
+Cantidad de pasajeros: ${reserva.cantidadPasajeros || 1}
 ${reserva.asientos?.join(', ') || 'No especificados'}
 
 ────────────────────────────────────────────
@@ -197,7 +226,7 @@ Precio original: $${reserva.precioOriginal}
 Descuento: -$${((reserva.precioOriginal - reserva.precioFinal) || 0).toFixed(2)}
 TOTAL: $${reserva.precioFinal?.toFixed(2) || reserva.precioOriginal}
 
-Método de pago: ${reserva.metodoPago === 'ida-vuelta' ? 'Tarjeta de crédito' : 'Transferencia bancaria'}
+Método de pago: ${etiquetaMetodoPago(reserva.metodoPago)}
 
 ════════════════════════════════════════════
 Para cambios o cancelaciones, contactá a:
@@ -218,16 +247,17 @@ reservas@pasajesaereos.com
     console.log('✓ Reserva descargada:', reserva.numero);
 }
 
-function cancelarReserva(index) {
+function cancelarReserva(id) {
     if (!confirm('¿Estás seguro que deseas cancelar esta reserva? Esta acción no se puede deshacer.')) {
         return;
     }
 
     const reservas = cargarDatos('misReservas') || [];
-    const reservaACancelar = reservas[index];
+    const reservaACancelar = reservas.find(r => r.id === id);
+
+    if (!reservaACancelar) return;
 
     reservaACancelar.estado = 'Cancelada';
-    reservas[index] = reservaACancelar;
 
     guardarDatos('misReservas', reservas);
 

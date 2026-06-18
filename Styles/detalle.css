@@ -175,7 +175,8 @@ footer {
   min-height: 1.1rem;
 }
 
-#btn-continuar {
+#btn-continuar,
+#btn-volver {
   align-self: flex-start;
   padding: 9px 24px;
   background-color: white;
@@ -186,7 +187,8 @@ footer {
   cursor: pointer;
 }
 
-#btn-continuar:hover {
+#btn-continuar:hover,
+#btn-volver:hover {
   background-color: rgb(166, 180, 206);
 }
 
@@ -251,7 +253,8 @@ footer {
     gap: 0.8rem;
   }
 
-  #btn-continuar {
+  #btn-continuar,
+  #btn-volver {
     align-self: center;
     width: 100%;
     max-width: 20rem;

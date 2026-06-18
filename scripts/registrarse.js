@@ -26,6 +26,14 @@ function manejarRegistro(event) {
         return;
     }
 
+    const usuariosRegistrados = cargarDatos('usuariosRegistrados') || [];
+
+    const yaExiste = usuariosRegistrados.some(u => u.email.toLowerCase() === email.toLowerCase());
+    if (yaExiste) {
+        mostrarNotificacion('Ya existe una cuenta con ese correo electrónico', 'error');
+        return;
+    }
+
     const nuevoUsuario = {
         nombre: `${nombre} ${apellido}`,
         email,
@@ -35,7 +43,8 @@ function manejarRegistro(event) {
         pais: 'Argentina'
     };
 
-    guardarDatos('usuarioRegistrado', nuevoUsuario);
+    usuariosRegistrados.push(nuevoUsuario);
+    guardarDatos('usuariosRegistrados', usuariosRegistrados);
 
     mostrarNotificacion('Cuenta creada exitosamente. Iniciá sesión para continuar.', 'exito');
     setTimeout(() => { window.location.href = '../index.html'; }, 1000);

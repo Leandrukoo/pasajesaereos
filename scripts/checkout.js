@@ -8,6 +8,7 @@ const cuponesValidos = {
 let precioOriginal = 500;
 let precioConDescuento = 500;
 let descuentoActual = 0;
+let cantidadPasajeros = 1;
 
 document.addEventListener('DOMContentLoaded', function() {
     inicializarCheckout();
@@ -18,6 +19,68 @@ document.addEventListener('DOMContentLoaded', function() {
 function inicializarCheckout() {
     console.log('✓ Checkout.js cargado');
     mostrarResumenPorDefecto();
+
+    const datosBusqueda = cargarDatos('datosBusquedaVuelos');
+    cantidadPasajeros = datosBusqueda ? (parseInt(datosBusqueda.pasajeros) || 1) : 1;
+
+    renderizarFormularioPasajeros(cantidadPasajeros);
+    precargarDatosUsuario();
+}
+
+function renderizarFormularioPasajeros(cantidad) {
+    if (cantidad <= 1) return;
+
+    const contenedor = document.querySelector('.datos_pasajero');
+    if (!contenedor) return;
+
+    let html = '';
+
+    for (let i = 1; i <= cantidad; i++) {
+        const sufijo = i === 1 ? '' : `-${i}`;
+
+        html += `
+            <input type="checkbox" id="acordeon-pasajero-${i}" class="acordeon-toggle" ${i === 1 ? 'checked' : ''}>
+            <label for="acordeon-pasajero-${i}" class="acordeon-header">
+                <span>Pasajero ${i}</span>
+                <span class="acordeon-flecha">⌄</span>
+            </label>
+            <div class="acordeon-body">
+                <label for="nombre${sufijo}">Nombre Completo</label>
+                <input type="text" id="nombre${sufijo}" placeholder="Ingresá tu nombre completo" required>
+
+                <label for="dni${sufijo}">Documento de identidad</label>
+                <div>
+                    <select id="tipoDni${sufijo}">
+                        <option value="1">DNI</option>
+                        <option value="2">CI</option>
+                        <option value="3">CC</option>
+                    </select>
+                    <input type="number" id="dni${sufijo}" placeholder="Ingrese su numero de identificacion" required>
+                </div>
+
+                <label for="email${sufijo}">Correo Electronico</label>
+                <input type="email" id="email${sufijo}" placeholder="Ingrese su correo electronico" required>
+
+                <label for="telefono${sufijo}">Telefono (Opcional)</label>
+                <input type="tel" id="telefono${sufijo}" placeholder="Ingrese su numero de telefono">
+            </div>
+        `;
+    }
+
+    contenedor.innerHTML = html;
+}
+
+function precargarDatosUsuario() {
+    const usuarioLogueado = cargarDatos('usuarioLogueado');
+    if (!usuarioLogueado) return;
+
+    const inputNombre = document.getElementById('nombre');
+    const inputEmail = document.getElementById('email');
+    const inputTelefono = document.getElementById('telefono');
+
+    if (inputNombre) inputNombre.value = usuarioLogueado.nombre || '';
+    if (inputEmail) inputEmail.value = usuarioLogueado.email || '';
+    if (inputTelefono) inputTelefono.value = usuarioLogueado.telefono || '';
 }
 
 function cargarResumenVuelo() {
@@ -102,15 +165,15 @@ function aplicarCupon() {
 function configurarEventosCheckout() {
     const form = document.querySelector('.contenido');
     const radioPago = document.querySelectorAll('input[name="tipo"]');
-    const inputNombre = document.getElementById('nombre');
-    const inputDNI = document.getElementById('dni');
-    const inputEmail = document.getElementById('email');
-    const inputTelefono = document.getElementById('telefono');
 
-    inputNombre.addEventListener('blur', validarNombre);
-    inputDNI.addEventListener('blur', validarDNI);
-    inputEmail.addEventListener('blur', validarEmail_checkout);
-    inputTelefono.addEventListener('blur', validarTelefono_checkout);
+    for (let i = 1; i <= cantidadPasajeros; i++) {
+        const sufijo = i === 1 ? '' : `-${i}`;
+
+        document.getElementById(`nombre${sufijo}`).addEventListener('blur', () => validarNombre(sufijo));
+        document.getElementById(`dni${sufijo}`).addEventListener('blur', () => validarDNI(sufijo));
+        document.getElementById(`email${sufijo}`).addEventListener('blur', () => validarEmail_checkout(sufijo));
+        document.getElementById(`telefono${sufijo}`).addEventListener('blur', () => validarTelefono_checkout(sufijo));
+    }
 
     radioPago.forEach(radio => {
         radio.addEventListener('change', manejarCambioMetodoPago);
@@ -119,8 +182,8 @@ function configurarEventosCheckout() {
     form.addEventListener('submit', manejarEnvioCheckout);
 }
 
-function validarNombre() {
-    const nombre = document.getElementById('nombre');
+function validarNombre(sufijo = '') {
+    const nombre = document.getElementById(`nombre${sufijo}`);
     const valor = nombre.value.trim();
 
     if (valor === '') {
@@ -138,8 +201,8 @@ function validarNombre() {
     return true;
 }
 
-function validarDNI() {
-    const dni = document.getElementById('dni');
+function validarDNI(sufijo = '') {
+    const dni = document.getElementById(`dni${sufijo}`);
     const valor = dni.value.trim();
 
     if (valor === '') {
@@ -158,8 +221,8 @@ function validarDNI() {
     return true;
 }
 
-function validarEmail_checkout() {
-    const email = document.getElementById('email');
+function validarEmail_checkout(sufijo = '') {
+    const email = document.getElementById(`email${sufijo}`);
     const valor = email.value.trim();
 
     if (valor === '') {
@@ -177,8 +240,8 @@ function validarEmail_checkout() {
     return true;
 }
 
-function validarTelefono_checkout() {
-    const telefono = document.getElementById('telefono');
+function validarTelefono_checkout(sufijo = '') {
+    const telefono = document.getElementById(`telefono${sufijo}`);
     const valor = telefono.value.trim();
 
     if (valor === '') {
@@ -216,10 +279,19 @@ function manejarCambioMetodoPago(event) {
 function manejarEnvioCheckout(event) {
     event.preventDefault();
 
-    const esNombreValido = validarNombre();
-    const esDNIValido = validarDNI();
-    const esEmailValido = validarEmail_checkout();
-    const esTelefonoValido = validarTelefono_checkout();
+    let esValido = true;
+    for (let i = 1; i <= cantidadPasajeros; i++) {
+        const sufijo = i === 1 ? '' : `-${i}`;
+        const esNombreValido = validarNombre(sufijo);
+        const esDNIValido = validarDNI(sufijo);
+        const esEmailValido = validarEmail_checkout(sufijo);
+        const esTelefonoValido = validarTelefono_checkout(sufijo);
+
+        if (!esNombreValido || !esDNIValido || !esEmailValido || !esTelefonoValido) {
+            esValido = false;
+        }
+    }
+
     const metodoPagoSeleccionado = document.querySelector('input[name="tipo"]:checked');
 
     if (
@@ -249,7 +321,7 @@ function manejarEnvioCheckout(event) {
     }
 }
 
-    if (!esNombreValido || !esDNIValido || !esEmailValido || !esTelefonoValido) {
+    if (!esValido) {
         mostrarNotificacion('Por favor completa todos los campos correctamente', 'error');
         return;
     }
@@ -259,12 +331,21 @@ function manejarEnvioCheckout(event) {
         return;
     }
 
+    const pasajeros = [];
+    for (let i = 1; i <= cantidadPasajeros; i++) {
+        const sufijo = i === 1 ? '' : `-${i}`;
+        pasajeros.push({
+            nombre: document.getElementById(`nombre${sufijo}`).value,
+            tipoDni: document.getElementById(`tipoDni${sufijo}`).value,
+            dni: document.getElementById(`dni${sufijo}`).value,
+            email: document.getElementById(`email${sufijo}`).value,
+            telefono: document.getElementById(`telefono${sufijo}`).value
+        });
+    }
+
     const datosCheckout = {
-        nombre: document.getElementById('nombre').value,
-        tipoDni: document.getElementById('tipoDni').value,
-        dni: document.getElementById('dni').value,
-        email: document.getElementById('email').value,
-        telefono: document.getElementById('telefono').value,
+        ...pasajeros[0],
+        pasajeros,
         metodoPago: metodoPagoSeleccionado.value,
         precioFinal: precioConDescuento,
         precioOriginal: precioOriginal,

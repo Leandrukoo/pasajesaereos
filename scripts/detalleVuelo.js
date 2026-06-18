@@ -14,7 +14,7 @@ function cargarDetalleVuelo() {
     const datosBusqueda = cargarDatos('datosBusquedaVuelos');
 
     if (datosBusqueda) {
-        cantidadPasajeros = parseInt(datosBusqueda.pasajeros);
+        cantidadPasajeros = parseInt(datosBusqueda.pasajeros) || 1;
     }
 
     const vueloSeleccionado = cargarDatos('vueloSeleccionado');
@@ -32,9 +32,23 @@ function cargarDetalleVuelo() {
                     <p><strong>IDA: ${vueloSeleccionado.origen} → ${vueloSeleccionado.destino}</strong></p>
                     <p>Salida: ${vueloSeleccionado.horaSalida}</p>
                     <p>Llegada: ${vueloSeleccionado.horaLlegada}</p>
-                    <p>Duración: ${vueloSeleccionado.duracion}</p>
+                    <p>Duración: ${calcularDuracion(vueloSeleccionado.horaSalida, vueloSeleccionado.horaLlegada)}</p>
                     <p>Tipo: ${vueloSeleccionado.tipo}</p>
                 `;
+            }
+        }
+
+        if (seccionsVuelos.length > 1) {
+            const vueloVuelta = seccionsVuelos[1];
+
+            if (datosBusqueda && datosBusqueda.tipo === 'solo-ida') {
+                vueloVuelta.style.display = 'none';
+            } else {
+                vueloVuelta.style.display = '';
+                const tituloVuelta = vueloVuelta.querySelector('div p');
+                if (tituloVuelta) {
+                    tituloVuelta.innerHTML = `<strong>VUELTA: ${vueloSeleccionado.destino} → ${vueloSeleccionado.origen}</strong>`;
+                }
             }
         }
 
@@ -135,22 +149,22 @@ function configurarEventosAsientos() {
 function actualizarInfoSeleccion() {
     const infoElement = document.getElementById('info-seleccion');
     const btnContinuar = document.getElementById('btn-continuar');
+    const completo = asientosSeleccionados.length === cantidadPasajeros;
 
     if (asientosSeleccionados.length === 0) {
-        infoElement.innerHTML = '👉 Hacé clic en un asiento disponible para seleccionarlo.';
+        infoElement.innerHTML = `👉 Hacé clic en un asiento disponible para seleccionarlo (necesitás ${cantidadPasajeros}).`;
         infoElement.style.color = '#FFC107';
-        btnContinuar.disabled = true;
-        btnContinuar.style.opacity = '0.5';
     } else {
         const plural = asientosSeleccionados.length === 1 ? 'asiento' : 'asientos';
         infoElement.innerHTML = `
-            ✓ Asientos seleccionados: <strong>${asientosSeleccionados.join(', ')}</strong>
-            (${asientosSeleccionados.length} ${plural})
+            ${completo ? '✓' : '👉'} Asientos seleccionados: <strong>${asientosSeleccionados.join(', ')}</strong>
+            (${asientosSeleccionados.length}/${cantidadPasajeros} ${plural})
         `;
-        infoElement.style.color = '#4CAF50';
-        btnContinuar.disabled = false;
-        btnContinuar.style.opacity = '1';
+        infoElement.style.color = completo ? '#4CAF50' : '#FFC107';
     }
+
+    btnContinuar.disabled = !completo;
+    btnContinuar.style.opacity = completo ? '1' : '0.5';
 }
 
 function configurarBtnContinuar() {
@@ -159,8 +173,8 @@ function configurarBtnContinuar() {
     btnContinuar.addEventListener('click', function(e) {
         e.preventDefault();
 
-        if (asientosSeleccionados.length === 0) {
-            mostrarNotificacion('Por favor selecciona al menos un asiento', 'error');
+        if (asientosSeleccionados.length !== cantidadPasajeros) {
+            mostrarNotificacion(`Tenés que seleccionar ${cantidadPasajeros} asiento(s), uno por pasajero`, 'error');
             return;
         }
 
@@ -239,7 +253,8 @@ function agregarEstilosAsientos() {
             opacity: 0.6;
         }
 
-        #btn-continuar {
+        #btn-continuar,
+        #btn-volver {
             padding: 0.8rem 2rem;
             font-size: 1.1rem;
             margin-top: 1rem;
@@ -250,7 +265,8 @@ function agregarEstilosAsientos() {
             transition: all 0.3s;
         }
 
-        #btn-continuar:not(:disabled):hover {
+        #btn-continuar:not(:disabled):hover,
+        #btn-volver:hover {
             background-color: #2196F3;
             transform: scale(1.05);
         }

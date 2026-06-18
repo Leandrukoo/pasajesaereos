@@ -43,11 +43,15 @@
                     <div class="fila-formulario">
                         <div class="items-formulario">
                             <label for="origen"><i class="fa-solid fa-plane-departure"></i> Origen: </label>
-                            <input type="text" id="origen" name="origen" placeholder="Ciudad de origen" required>
+                            <select id="origen" name="origen" required>
+                                <option value="" disabled selected>Selecciona una ciudad</option>
+                            </select>
                         </div>
                         <div class="items-formulario">
                             <label for="destino"><i class="fa-solid fa-plane-arrival"></i> Destino: </label>
-                            <input type="text" id="destino" name="destino" placeholder="Ciudad de destino" required>
+                            <select id="destino" name="destino" required>
+                                <option value="" disabled selected>Selecciona una ciudad</option>
+                            </select>
                         </div>
                     </div>
 
@@ -65,7 +69,8 @@
                     <div class="fila-formulario">
                         <div class="items-formulario">
                             <label for="pasajeros"> <i class="fa-solid fa-user"></i> Pasajeros: </label>
-                            <select id="pasajeros" name="pasajeros">
+                            <select id="pasajeros" name="pasajeros" required>
+                                <option value="" disabled selected>Elegí una opción</option>
                                 <option value="1">1 Pasajero</option>
                                 <option value="2">2 Pasajeros</option>
                                 <option value="3">3 Pasajeros</option>
@@ -73,7 +78,8 @@
                         </div>
                         <div class="items-formulario">
                             <label for="clase"> <i class="fa-solid fa-chair"></i> Clase: </label>
-                            <select id="clase" name="clase">
+                            <select id="clase" name="clase" required>
+                                <option value="" disabled selected>Elegí una opción</option>
                                 <option value="economica">Económica</option>
                                 <option value="ejecutiva">Ejecutiva</option>
                                 <option value="primera">Primera Clase</option>

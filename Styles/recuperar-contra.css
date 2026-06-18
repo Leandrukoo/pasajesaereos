@@ -1,6 +1,6 @@
 main {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    width: min(95%, 80rem);
+    margin: 2rem auto;
 }
 
 .seccion-recuperar-contra {
@@ -9,6 +9,24 @@ main {
     flex-direction: column;
     align-items: center;
     width: 100%;
+}
+
+.btn-volver {
+    align-self: flex-start;
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    background-color: rgb(40, 40, 48);
+    color: white;
+    border: 2px solid #2196F3;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-volver:hover {
+    background-color: #2196F3;
+    transform: scale(1.05);
 }
 
 .form-recuperar-contra {
@@ -82,13 +100,11 @@ button{
     margin-top: 1rem;
 }
 
-a {
-    color: white;
-    margin-top: 0.5rem;
-    text-decoration: none;
-}
-
 @media (max-width: 480px) {
+    main {
+        width: 100%;
+    }
+
     .form-recuperar-contra {
         padding: 1.5rem;
         width: 100vw;
@@ -99,5 +115,11 @@ a {
     .btn-recuperar-contra,
     .button_pagar {
         max-width: 100%;
+    }
+
+    .btn-volver {
+        align-self: center;
+        width: 100%;
+        max-width: 20rem;
     }
 }

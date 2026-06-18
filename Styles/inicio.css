@@ -233,13 +233,6 @@ textarea {
     gap: 0.9375rem;
 }
 
-.link-perfil {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    font-size: 1.1rem;
-}
-
 /* ============================================
    RESPONSIVE - TABLET (768px)
    ============================================ */

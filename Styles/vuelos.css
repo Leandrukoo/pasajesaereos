@@ -112,6 +112,10 @@ footer {
     border-top: none;
 }
 
+.filtro-extra {
+    padding-top: 16px;
+}
+
 .subtitulo {
     width: 100%;
     padding: 1rem;
@@ -204,6 +208,7 @@ h1 {
         width: 100%;
         margin-right: 0;
         margin-bottom: 1rem;
+        order: 2;
     }
 
     .filtro_equipaje {
@@ -211,12 +216,14 @@ h1 {
         margin-left: 0;
         height: auto;
         margin-top: 1rem;
+        order: 3;
     }
 
     .aerolineas {
         width: 100%;
         margin-left: 0;
         margin-bottom: 1rem;
+        order: 1;
     }
 
     .subtitulo,

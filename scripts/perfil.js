@@ -8,6 +8,14 @@ const perfilPorDefecto = {
     fechaRegistro: '2023-06-15'
 };
 
+const camposPerfil = [
+    { propiedad: 'nombre', tipo: 'text', mensajeError: 'El nombre debe tener al menos 3 caracteres', validar: valor => valor.length >= 3 },
+    { propiedad: 'dni', tipo: 'text', mensajeError: 'DNI inválido (7-10 dígitos)', validar: validarDNI },
+    { propiedad: 'email', tipo: 'email', mensajeError: 'Email inválido', validar: validarEmail },
+    { propiedad: 'telefono', tipo: 'tel', mensajeError: 'Teléfono inválido (10-15 dígitos)', validar: validarTelefono },
+    { propiedad: 'pais', tipo: 'text', mensajeError: 'El país no puede estar vacío', validar: valor => valor.length > 0 }
+];
+
 document.addEventListener('DOMContentLoaded', function() {
     cargarPerfilUsuario();
     configurarNavegacionPerfil();
@@ -84,6 +92,7 @@ function agregarBotonesEdicion(perfilCard) {
     contenedorBotones.className = 'botones-perfil';
     contenedorBotones.innerHTML = `
         <button class="btn-editar-perfil" onclick="habilitarEdicion()">Editar Perfil</button>
+        <button class="btn-cambiar-contra" onclick="window.location.href='recuperar-contra.html'">Cambiar Contraseña</button>
         <button class="btn-salir" onclick="salirDeSesion()">Cerrar Sesión</button>
     `;
     contenedorBotones.style.cssText = `
@@ -117,6 +126,16 @@ function agregarBotonesEdicion(perfilCard) {
             transform: translateY(-2px);
         }
 
+        .btn-cambiar-contra {
+            background-color: #757575;
+            color: white;
+        }
+
+        .btn-cambiar-contra:hover {
+            background-color: #5e5e5e;
+            transform: translateY(-2px);
+        }
+
         .btn-salir {
             background-color: #f44336;
             color: white;
@@ -137,12 +156,13 @@ function agregarBotonesEdicion(perfilCard) {
 function habilitarEdicion() {
     const perfilItems = document.querySelectorAll('.perfil-item');
 
-    perfilItems.forEach(item => {
+    perfilItems.forEach((item, index) => {
         const p = item.querySelector('p');
+        const campo = camposPerfil[index];
 
-        if (p) {
+        if (p && campo) {
             const inputEdicion = document.createElement('input');
-            inputEdicion.type = 'text';
+            inputEdicion.type = campo.tipo;
             inputEdicion.value = p.textContent;
             inputEdicion.className = 'input-edicion-perfil';
             inputEdicion.style.cssText = `
@@ -154,6 +174,8 @@ function habilitarEdicion() {
                 color: white;
                 font-size: 1rem;
             `;
+
+            inputEdicion.addEventListener('blur', () => validarCampoPerfil(inputEdicion, campo));
 
             p.replaceWith(inputEdicion);
         }
@@ -167,34 +189,98 @@ function habilitarEdicion() {
         };
     }
 
+    const btnCambiarContra = document.querySelector('.btn-cambiar-contra');
+    if (btnCambiarContra) {
+        btnCambiarContra.style.display = 'none';
+    }
+
     mostrarNotificacion('Modo edición activado', 'info');
+}
+
+function validarCampoPerfil(input, campo) {
+    const valor = input.value.trim();
+    const esValido = campo.validar(valor);
+    input.style.borderColor = esValido ? '#4CAF50' : '#f44336';
+
+    if (!esValido) {
+        mostrarNotificacion(campo.mensajeError, 'error');
+    }
+
+    return esValido;
 }
 
 function guardarCambiosPerfil() {
     const perfilCard = document.querySelector('.perfil-card');
     const inputs = perfilCard.querySelectorAll('.input-edicion-perfil');
 
-    const mapeo = [
-        'nombre',
-        'dni',
-        'email',
-        'telefono',
-        'pais'
-    ];
-
-    const perfilActualizado = { ...perfilPorDefecto };
+    const valores = {};
+    let todoValido = true;
 
     inputs.forEach((input, index) => {
-        if (mapeo[index]) {
-            perfilActualizado[mapeo[index]] = input.value;
-        }
+        const campo = camposPerfil[index];
+        if (!campo) return;
 
-        const p = document.createElement('p');
-        p.textContent = input.value;
-        input.replaceWith(p);
+        valores[campo.propiedad] = input.value.trim();
+
+        if (!validarCampoPerfil(input, campo)) {
+            todoValido = false;
+        }
     });
 
+    if (!todoValido) {
+        mostrarNotificacion('Revisá los campos marcados en rojo', 'error');
+        return;
+    }
+
+    const usuarioLogueado = cargarDatos('usuarioLogueado');
+    const usuariosRegistrados = cargarDatos('usuariosRegistrados') || [];
+
+    if (usuarioLogueado) {
+        const emailEnUso = usuariosRegistrados.some(u =>
+            u.email.toLowerCase() === valores.email.toLowerCase() &&
+            u.email.toLowerCase() !== usuarioLogueado.email.toLowerCase()
+        );
+
+        if (emailEnUso) {
+            mostrarNotificacion('Ya existe una cuenta con ese correo electrónico', 'error');
+            return;
+        }
+    }
+
+    const perfilActualizado = { ...perfilPorDefecto, ...valores };
+
     guardarDatos('perfilUsuario', perfilActualizado);
+
+    if (usuarioLogueado) {
+        const usuarioRegistrado = usuariosRegistrados.find(
+            u => u.email.toLowerCase() === usuarioLogueado.email.toLowerCase()
+        );
+
+        if (usuarioRegistrado) {
+            usuarioRegistrado.nombre = perfilActualizado.nombre;
+            usuarioRegistrado.dni = perfilActualizado.dni;
+            usuarioRegistrado.email = perfilActualizado.email;
+            usuarioRegistrado.telefono = perfilActualizado.telefono;
+            usuarioRegistrado.pais = perfilActualizado.pais;
+            guardarDatos('usuariosRegistrados', usuariosRegistrados);
+        }
+
+        guardarDatos('usuarioLogueado', {
+            ...usuarioLogueado,
+            nombre: perfilActualizado.nombre,
+            dni: perfilActualizado.dni,
+            email: perfilActualizado.email,
+            telefono: perfilActualizado.telefono,
+            pais: perfilActualizado.pais
+        });
+    }
+
+    inputs.forEach((input, index) => {
+        const campo = camposPerfil[index];
+        const p = document.createElement('p');
+        p.textContent = valores[campo.propiedad];
+        input.replaceWith(p);
+    });
 
     const linkPerfil = document.querySelector('.link-perfil');
     if (linkPerfil) {
@@ -207,6 +293,11 @@ function guardarCambiosPerfil() {
         btnGuardar.onclick = function() {
             habilitarEdicion();
         };
+    }
+
+    const btnCambiarContra = document.querySelector('.btn-cambiar-contra');
+    if (btnCambiarContra) {
+        btnCambiarContra.style.display = '';
     }
 
     mostrarNotificacion('Cambios guardados correctamente', 'exito');
@@ -232,6 +323,7 @@ function configurarNavegacionPerfil() {
 
 function salirDeSesion() {
     if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
+        limpiarDatos('usuarioLogueado');
         limpiarDatos('perfilUsuario');
         limpiarDatos('datosCheckout');
         limpiarDatos('vueloSeleccionado');

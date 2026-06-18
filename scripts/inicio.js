@@ -1,7 +1,26 @@
 document.addEventListener('DOMContentLoaded', function() {
+    poblarCiudades();
     inicializarFormulario();
-    cargarDatosFormulario();
 });
+
+function poblarCiudades() {
+    const selectOrigen = document.getElementById('origen');
+    const selectDestino = document.getElementById('destino');
+
+    ciudadesDisponibles.forEach(ciudad => {
+        const opcionTexto = `${ciudad.nombre} (${ciudad.codigo})`;
+
+        const opcionOrigen = document.createElement('option');
+        opcionOrigen.value = ciudad.nombre;
+        opcionOrigen.textContent = opcionTexto;
+        selectOrigen.appendChild(opcionOrigen);
+
+        const opcionDestino = document.createElement('option');
+        opcionDestino.value = ciudad.nombre;
+        opcionDestino.textContent = opcionTexto;
+        selectDestino.appendChild(opcionDestino);
+    });
+}
 
 function inicializarFormulario() {
     const form = document.querySelector('.main-form');
@@ -68,22 +87,4 @@ function manejarEnvio(event) {
     guardarDatos('datosBusquedaVuelos', datosBusqueda);
     mostrarNotificacion('Búsqueda iniciada...', 'info');
     this.submit();
-}
-
-function cargarDatosFormulario() {
-    const datosGuardados = cargarDatos('datosBusquedaVuelos');
-    if (!datosGuardados) return;
-
-    document.getElementById('origen').value = datosGuardados.origen || '';
-    document.getElementById('destino').value = datosGuardados.destino || '';
-    document.getElementById('fecha-ida').value = datosGuardados.fechaIda || '';
-    document.getElementById('fecha-vuelta').value = datosGuardados.fechaVuelta || '';
-    document.getElementById('pasajeros').value = datosGuardados.pasajeros || '1';
-    document.getElementById('clase').value = datosGuardados.clase || 'economica';
-
-    const radioTipo = document.querySelector(`input[name="tipo"][value="${datosGuardados.tipo}"]`);
-    if (radioTipo) {
-        radioTipo.checked = true;
-        radioTipo.dispatchEvent(new Event('change'));
-    }
 }
