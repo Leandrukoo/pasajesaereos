@@ -93,7 +93,6 @@ function renderizarVueloDeOferta(oferta) {
 
     const [nombreOrigen, nombreDestino] = oferta.rutaCompleta.split(' → ');
     agregarFiltrosBusqueda(nombreOrigen, nombreDestino);
-    mostrarDatosBusqueda();
     actualizarContadorResultados(1);
 
     console.log('✓ Vuelo de oferta mostrado:', vueloOferta);
@@ -108,9 +107,9 @@ function agregarFiltrosBusqueda(nombreOrigen, nombreDestino) {
             <h2>Tipo de viaje</h2>
         </div>
         <section class="filtrado_tipo_vuelo">
-            <input type="radio" id="oferta-ida-vuelta" name="oferta-tipo" value="ida-vuelta" checked>
+            <input type="radio" id="oferta-ida-vuelta" name="oferta-tipo" value="ida-vuelta" autocomplete="off">
             <label for="oferta-ida-vuelta">Ida y vuelta</label><br>
-            <input type="radio" id="oferta-solo-ida" name="oferta-tipo" value="solo-ida">
+            <input type="radio" id="oferta-solo-ida" name="oferta-tipo" value="solo-ida" autocomplete="off" checked>
             <label for="oferta-solo-ida">Solo ida</label><br>
         </section>
         <div class="subtitulo">
@@ -118,15 +117,16 @@ function agregarFiltrosBusqueda(nombreOrigen, nombreDestino) {
         </div>
         <section class="filtrado_por filtro-extra">
             <label for="oferta-fecha-ida">Ida</label>
-            <input type="date" id="oferta-fecha-ida">
+            <input type="date" id="oferta-fecha-ida" autocomplete="off">
             <label for="oferta-fecha-vuelta" style="padding-top: 12px;">Vuelta</label>
-            <input type="date" id="oferta-fecha-vuelta">
+            <input type="date" id="oferta-fecha-vuelta" autocomplete="off" disabled>
         </section>
         <div class="subtitulo">
             <h2>Pasajeros</h2>
         </div>
         <section class="filtrado_por filtro-extra">
-            <select id="oferta-pasajeros">
+            <select id="oferta-pasajeros" autocomplete="off">
+                <option value="" disabled selected>Elegí una opción</option>
                 <option value="1">1 Pasajero</option>
                 <option value="2">2 Pasajeros</option>
                 <option value="3">3 Pasajeros</option>
@@ -136,7 +136,8 @@ function agregarFiltrosBusqueda(nombreOrigen, nombreDestino) {
             <h2>Clase</h2>
         </div>
         <section class="filtrado_por filtro-extra">
-            <select id="oferta-clase">
+            <select id="oferta-clase" autocomplete="off">
+                <option value="" disabled selected>Elegí una opción</option>
                 <option value="economica">Económica</option>
                 <option value="ejecutiva">Ejecutiva</option>
                 <option value="primera">Primera Clase</option>
@@ -148,8 +149,8 @@ function agregarFiltrosBusqueda(nombreOrigen, nombreDestino) {
     const inputFechaVuelta = document.getElementById('oferta-fecha-vuelta');
     const selectPasajeros = document.getElementById('oferta-pasajeros');
     const selectClase = document.getElementById('oferta-clase');
-    inputFechaIda.value = formatearFechaISO(sumarDias(new Date(), 7));
-    inputFechaVuelta.value = formatearFechaISO(sumarDias(new Date(), 14));
+    inputFechaIda.value = formatearFechaISO(new Date());
+    document.getElementById('oferta-solo-ida').checked = true;
 
     function guardarBusquedaOferta() {
         const tipoSeleccionado = document.querySelector('input[name="oferta-tipo"]:checked').value;
@@ -162,6 +163,7 @@ function agregarFiltrosBusqueda(nombreOrigen, nombreDestino) {
             pasajeros: selectPasajeros.value,
             clase: selectClase.value
         });
+        mostrarDatosBusqueda();
     }
 
     document.querySelectorAll('input[name="oferta-tipo"]').forEach(radio => {
@@ -177,10 +179,6 @@ function agregarFiltrosBusqueda(nombreOrigen, nombreDestino) {
     selectClase.addEventListener('change', guardarBusquedaOferta);
 
     guardarBusquedaOferta();
-}
-
-function sumarDias(fecha, dias) {
-    return new Date(fecha.getTime() + dias * 24 * 60 * 60 * 1000);
 }
 
 function formatearFechaISO(fecha) {
@@ -221,14 +219,13 @@ function renderizarVuelos() {
 
 function mostrarDatosBusqueda() {
     const datosBusqueda = cargarDatos('datosBusquedaVuelos');
+    if (!datosBusqueda) return;
 
-    if (datosBusqueda) {
-        const resumenBusqueda = document.createElement('div');
+    let resumenBusqueda = document.querySelector('.resumen-busqueda');
+
+    if (!resumenBusqueda) {
+        resumenBusqueda = document.createElement('div');
         resumenBusqueda.className = 'resumen-busqueda';
-        resumenBusqueda.innerHTML = `
-            <p><strong>${datosBusqueda.origen}</strong> → <strong>${datosBusqueda.destino}</strong>
-            | ${datosBusqueda.fechaIda} | ${datosBusqueda.pasajeros} pasajero(s) | ${datosBusqueda.clase}</p>
-        `;
         resumenBusqueda.style.cssText = `
             background-color: rgba(132, 163, 221, 0.3);
             padding: 1rem;
@@ -240,9 +237,17 @@ function mostrarDatosBusqueda() {
         const main = document.querySelector('main');
         const h1 = main.querySelector('h1');
         main.insertBefore(resumenBusqueda, h1.nextSibling);
-
-        console.log('✓ Datos de búsqueda mostrados');
     }
+
+    const partePasajeros = datosBusqueda.pasajeros ? ` | ${datosBusqueda.pasajeros} pasajero(s)` : '';
+    const parteClase = datosBusqueda.clase ? ` | ${datosBusqueda.clase}` : '';
+
+    resumenBusqueda.innerHTML = `
+        <p><strong>${datosBusqueda.origen}</strong> → <strong>${datosBusqueda.destino}</strong>
+        | ${datosBusqueda.fechaIda}${partePasajeros}${parteClase}</p>
+    `;
+
+    console.log('✓ Datos de búsqueda mostrados');
 }
 
 function configurarFiltros() {
