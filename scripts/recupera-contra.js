@@ -39,7 +39,12 @@ function personalizarSegunSesion() {
         btnVolver.textContent = 'Volver';
         btnVolver.addEventListener('click', volverAtras);
         seccion.insertBefore(btnVolver, seccion.firstChild);
+
+        const titulo = seccion.querySelector('h1');
+        if (titulo) titulo.textContent = 'Cambiar Contraseña';
     }
+
+    document.title = 'Cambiar Contraseña';
 }
 
 function manejarRecuperacion(event) {

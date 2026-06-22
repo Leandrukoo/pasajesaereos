@@ -75,10 +75,12 @@ function precargarDatosUsuario() {
     if (!usuarioLogueado) return;
 
     const inputNombre = document.getElementById('nombre');
+    const inputDNI = document.getElementById('dni');
     const inputEmail = document.getElementById('email');
     const inputTelefono = document.getElementById('telefono');
 
     if (inputNombre) inputNombre.value = usuarioLogueado.nombre || '';
+    if (inputDNI) inputDNI.value = usuarioLogueado.dni || '';
     if (inputEmail) inputEmail.value = usuarioLogueado.email || '';
     if (inputTelefono) inputTelefono.value = usuarioLogueado.telefono || '';
 }

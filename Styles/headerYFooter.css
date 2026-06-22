@@ -29,6 +29,11 @@ option {
     color: white;
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="month"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
 header {
     position: fixed;
     top: 0;

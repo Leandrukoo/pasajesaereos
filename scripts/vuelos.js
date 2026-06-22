@@ -11,6 +11,12 @@ const vuelosMock = [
     { id: 10, origen: 'BUE', destino: 'MAD', horaSalida: '23:59', horaLlegada: '04:30', tipo: 'Con escala', duracion: '4 h 30m', precio: 400, aerolinea: 'aerolinea1', equipaje: false },
 ];
 
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        location.reload();
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     const ofertaAplicada = cargarDatos('ofertaAplicada');
 
@@ -18,7 +24,12 @@ document.addEventListener('DOMContentLoaded', function() {
         renderizarVueloDeOferta(ofertaAplicada);
         limpiarDatos('ofertaAplicada');
     } else {
-        const huboBusqueda = !!cargarDatos('datosBusquedaVuelos');
+        const huboBusqueda = !!cargarDatos('busquedaDesdeFormulario');
+        limpiarDatos('busquedaDesdeFormulario');
+
+        if (!huboBusqueda) {
+            limpiarDatos('datosBusquedaVuelos');
+        }
 
         console.log('✓ Vuelos.js cargado');
         renderizarVuelos();
@@ -108,7 +119,7 @@ function agregarFiltrosBusqueda(nombreOrigen, nombreDestino) {
         <section class="filtrado_por filtro-extra">
             <label for="oferta-fecha-ida">Ida</label>
             <input type="date" id="oferta-fecha-ida">
-            <label for="oferta-fecha-vuelta">Vuelta</label>
+            <label for="oferta-fecha-vuelta" style="padding-top: 12px;">Vuelta</label>
             <input type="date" id="oferta-fecha-vuelta">
         </section>
         <div class="subtitulo">

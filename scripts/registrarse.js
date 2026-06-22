@@ -26,6 +26,16 @@ function manejarRegistro(event) {
         return;
     }
 
+    if (!validarDNI(dni)) {
+        mostrarNotificacion('DNI inválido (7-10 dígitos)', 'error');
+        return;
+    }
+
+    if (!validarTelefono(telefono)) {
+        mostrarNotificacion('Teléfono inválido (10-15 dígitos)', 'error');
+        return;
+    }
+
     const usuariosRegistrados = cargarDatos('usuariosRegistrados') || [];
 
     const yaExiste = usuariosRegistrados.some(u => u.email.toLowerCase() === email.toLowerCase());

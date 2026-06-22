@@ -135,13 +135,7 @@ function mostrarReservas(reservas) {
             <div class="reserva-pago-info">
                 <p><strong>Cantidad de pasajeros:</strong> ${reserva.cantidadPasajeros || 1}</p>
                 <p><strong>Asientos:</strong> ${reserva.asientos?.join(', ') || 'No especificados'}</p>
-                <p>
-                    <strong>Método de pago:</strong>
-                    <select onchange="cambiarMetodoPago(${reserva.id}, this.value)">
-                        <option value="tarjeta" ${reserva.metodoPago === 'tarjeta' ? 'selected' : ''}>Tarjeta de crédito</option>
-                        <option value="debito" ${reserva.metodoPago === 'debito' ? 'selected' : ''}>Tarjeta de débito</option>
-                    </select>
-                </p>
+                <p><strong>Método de pago:</strong> ${etiquetaMetodoPago(reserva.metodoPago)}</p>
                 ${reserva.descuentoAplicado > 0 ? `<p class="reserva-descuento"><strong>Descuento aplicado:</strong> ${(reserva.descuentoAplicado * 100)}%</p>` : ''}
             </div>
 
@@ -168,17 +162,6 @@ function configurarEventosReservas() {
 function etiquetaMetodoPago(metodo) {
     const etiquetas = { tarjeta: 'Tarjeta de crédito', debito: 'Tarjeta de débito' };
     return etiquetas[metodo] || metodo;
-}
-
-function cambiarMetodoPago(id, nuevoMetodo) {
-    const reservas = cargarDatos('misReservas') || [];
-    const reserva = reservas.find(r => r.id === id);
-    if (!reserva) return;
-
-    reserva.metodoPago = nuevoMetodo;
-    guardarDatos('misReservas', reservas);
-
-    mostrarNotificacion('Método de pago actualizado', 'exito');
 }
 
 function descargarReserva(id) {

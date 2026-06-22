@@ -3,6 +3,13 @@ document.addEventListener('DOMContentLoaded', function() {
     inicializarFormulario();
 });
 
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        const form = document.querySelector('.main-form');
+        if (form) form.reset();
+    }
+});
+
 function poblarCiudades() {
     const selectOrigen = document.getElementById('origen');
     const selectDestino = document.getElementById('destino');
@@ -85,6 +92,7 @@ function manejarEnvio(event) {
     };
 
     guardarDatos('datosBusquedaVuelos', datosBusqueda);
+    guardarDatos('busquedaDesdeFormulario', true);
     mostrarNotificacion('Búsqueda iniciada...', 'info');
     this.submit();
 }
